@@ -180,7 +180,7 @@ public class Login_Fragment extends Fragment implements OnClickListener{
         else
         {
             Context CurrentObj=getActivity();
-            Intent Intents= new Intent(this.getActivity(),SportsGrid.class); //Start "Sedan" Activity
+            Intent Intents= new Intent(this.getActivity(),MaterialTabActivity.class); //Start "Sedan" Activity
             CurrentObj.startActivity(Intents);
         }
 
