@@ -24,4 +24,7 @@
     <string name="deselect_all">Deselect All</string>
     <string name="select_all">Select All</string>
     <string name="select_sport">Select Sports of Interest</string>
+    <string name="tab1">News Feed</string>
+    <string name="tab2">Outdoor</string>
+    <string name="tab3">Friends</string>
 </resources>
