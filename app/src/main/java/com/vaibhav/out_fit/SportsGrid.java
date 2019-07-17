@@ -49,9 +49,7 @@ public class SportsGrid extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SportsGrid.this, MaterialTabActivity.class);
                 intent.putStringArrayListExtra("SELECTED_SPORTS", selectedStrings);
-//                 Intent intent_outdoor = new Intent(SportsGrid.this, OutDoorSportSelect.class);
-//                 intent_outdoor.putStringArrayListExtra("SELECTED_LETTER", selectedStrings);
-                startActivity(intent_outdoor);
+                startActivity(intent);
             }
         });
     }

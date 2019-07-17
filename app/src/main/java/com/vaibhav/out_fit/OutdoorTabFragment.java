@@ -3,23 +3,20 @@ package com.vaibhav.out_fit;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class OutDoorSportSelect extends AppCompatActivity {
-
+public class OutdoorTabFragment extends Fragment {
     private GridView gridView;
     private View btnGo;
     String[] itemsName;
@@ -28,15 +25,18 @@ public class OutDoorSportSelect extends AppCompatActivity {
     TextView GridViewItems,BackSelectedItem;
     int backposition = -1;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+public OutdoorTabFragment(){}
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_out_door_sport_select);
-        ArrayList<String> selectedSports = getIntent().getStringArrayListExtra("SELECTED_LETTER");
+        ArrayList<String> selectedSports = new ArrayList();
+        selectedSports.add("Cricket");
+        selectedSports.add("Football");
+        selectedSports.add("Cycling");
+        selectedSports.add("Running");
         itemsName = selectedSports.toArray(new String[0]);
-        gridView = (GridView) findViewById(R.id.outdoorSportsGrid);
-        btnGo = findViewById(R.id.outdoorSportsButton);
-        gridView.setAdapter(new TextAdapter(this));
+        gridView = (GridView) view.findViewById(R.id.outdoorSportsGrid);
+        btnGo = view.findViewById(R.id.outdoorSportsButton);
+        gridView.setAdapter(new TextAdapter(getActivity()));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -62,15 +62,15 @@ public class OutDoorSportSelect extends AppCompatActivity {
         btnGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OutDoorSportSelect.this, OutdoorMapFragment.class);
-                intent.putExtra("SELECTED_LETTER", selectedString);
+                Intent intent = new Intent(getActivity(), OutdoorMapActivity.class);
+                intent.putExtra("SPORT", selectedString);
                 startActivity(intent);
             }
         });
 
     }
 
-    private class TextAdapter extends BaseAdapter
+    public class TextAdapter extends BaseAdapter
     {
         Context context;
 
@@ -107,5 +107,11 @@ public class OutDoorSportSelect extends AppCompatActivity {
             text.setLayoutParams(new GridView.LayoutParams(300, 300));
             return text;
         }
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_outdoor_layout, container, false);
     }
 }
