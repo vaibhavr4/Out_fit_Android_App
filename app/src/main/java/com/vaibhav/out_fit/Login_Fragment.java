@@ -183,7 +183,5 @@ public class Login_Fragment extends Fragment implements OnClickListener{
             Intent Intents= new Intent(this.getActivity(),MaterialTabActivity.class); //Start "Sedan" Activity
             CurrentObj.startActivity(Intents);
         }
-
-
-    }
+            }
 }
