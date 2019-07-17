@@ -61,7 +61,6 @@ public class MaterialTabActivity extends AppCompatActivity {
                         Context CurrentObj=MaterialTabActivity.this;
                         Intent Intents= new Intent(MaterialTabActivity.this,SportsGrid.class);
                         CurrentObj.startActivity(Intents);
-                        Toast.makeText(MaterialTabActivity.this, "My Cart",Toast.LENGTH_SHORT).show();break;
                     default:
                         return true;
                 }
