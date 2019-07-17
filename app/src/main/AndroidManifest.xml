@@ -9,16 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.vaibhav.out_fit.SelectedSportsItemsActivity"></activity>
-        <activity android:name="com.vaibhav.out_fit.SportsGrid" />
-        <activity android:name="com.vaibhav.out_fit.LogoSplash">
+        <activity android:name=".OutDoorSportSelect" />
+        <activity android:name=".SelectedSportsItemsActivity" />
+        <activity android:name=".SportsGrid" />
+        <activity android:name=".LogoSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.vaibhav.out_fit.MainActivity" />
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
