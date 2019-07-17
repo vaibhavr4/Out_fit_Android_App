@@ -3,6 +3,8 @@ package com.vaibhav.out_fit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
@@ -76,8 +78,16 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
             case R.id.signUpBtn:
 
                 // Call checkValidation method
-                checkValidation();
-                break;
+                if(checkValidation()) {
+                    Context CurrentObj = getActivity();
+                    Intent Intents = new Intent(this.getActivity(), SportsGrid.class); //Start "Sedan" Activity
+                    CurrentObj.startActivity(Intents);
+                    break;
+                }
+                else
+                {
+                    break;
+                }
 
             case R.id.already_user:
 
@@ -89,7 +99,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
     }
 
     // Check Validation Method
-    private void checkValidation() {
+    private boolean checkValidation() {
 
         // Get all edittext texts
         String getFullName = fullName.getText().toString();
@@ -110,30 +120,40 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
                 || getLocation.equals("") || getLocation.length() == 0
                 || getPassword.equals("") || getPassword.length() == 0
                 || getConfirmPassword.equals("")
-                || getConfirmPassword.length() == 0)
-
+                || getConfirmPassword.length() == 0) {
             new CustomToast().Show_Toast(getActivity(), view,
                     "All fields are required.");
-
+            return false;
+        }
             // Check if email id valid or not
-        else if (!m.find())
+        else if (!m.find()) {
             new CustomToast().Show_Toast(getActivity(), view,
                     "Your Email Id is Invalid.");
+            return false;
+        }
 
             // Check if both password should be equal
-        else if (!getConfirmPassword.equals(getPassword))
+        else if (!getConfirmPassword.equals(getPassword)) {
             new CustomToast().Show_Toast(getActivity(), view,
                     "Both password doesn't match.");
+            return false;
+        }
 
             // Make sure user should check Terms and Conditions checkbox
-        else if (!terms_conditions.isChecked())
+        else if (!terms_conditions.isChecked()) {
+
+
             new CustomToast().Show_Toast(getActivity(), view,
                     "Please select Terms and Conditions.");
+            return false;
+        }
 
             // Else do signup or do your stuff
-        else
-            Toast.makeText(getActivity(), "Do SignUp.", Toast.LENGTH_SHORT)
-                    .show();
+        else {
+//            Toast.makeText(getActivity(), "Do SignUp.", Toast.LENGTH_SHORT)
+//                    .show();
+            return true;
+        }
 
     }
 }

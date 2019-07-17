@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".OutDoorSportSelect" />
-        <activity android:name=".SelectedSportsItemsActivity" />
+        <activity android:name=".MaterialTabActivity" />
         <activity android:name=".SportsGrid" />
         <activity android:name=".LogoSplash">
             <intent-filter>

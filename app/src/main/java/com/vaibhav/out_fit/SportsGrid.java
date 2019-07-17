@@ -47,7 +47,7 @@ public class SportsGrid extends AppCompatActivity {
         btnGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SportsGrid.this, SelectedSportsItemsActivity.class);
+                Intent intent = new Intent(SportsGrid.this, MaterialTabActivity.class);
                 intent.putStringArrayListExtra("SELECTED_LETTER", selectedStrings);
                 Intent intent_outdoor = new Intent(SportsGrid.this, OutDoorSportSelect.class);
                 intent_outdoor.putStringArrayListExtra("SELECTED_LETTER", selectedStrings);
