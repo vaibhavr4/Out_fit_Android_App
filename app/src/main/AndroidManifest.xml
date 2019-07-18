@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OutdoorMapActivity"></activity>
+        <activity android:name=".OutdoorInviteFriendsAdapterItem"></activity>
+        <activity android:name=".OutdoorInviteFriendsActivity" />
+        <activity android:name=".OutdoorEventActivity" />
+        <activity android:name=".OutdoorDateTimeActivity" />
+        <activity android:name=".OutdoorMapActivity" />
         <activity android:name=".MaterialTabActivity" />
         <activity android:name=".SportsGrid" />
         <activity android:name=".LogoSplash">

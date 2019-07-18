@@ -23,10 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/sportInterest"
         android:layout_marginBottom="-87dp"
-        android:background="@color/background_color"
         android:text="Confirm Selected Sport"
         android:fontFamily="sans-serif"
-        android:textColor="@color/white"/>
+        android:textStyle="bold" />
 
     <GridView
         android:id="@+id/outdoorSportsGrid"

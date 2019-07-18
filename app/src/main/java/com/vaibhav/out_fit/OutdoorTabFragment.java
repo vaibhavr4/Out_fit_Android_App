@@ -28,11 +28,15 @@ public class OutdoorTabFragment extends Fragment {
 public OutdoorTabFragment(){}
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
+        Database storage of selected sports to be included
+         */
         ArrayList<String> selectedSports = new ArrayList();
         selectedSports.add("Cricket");
         selectedSports.add("Football");
         selectedSports.add("Cycling");
         selectedSports.add("Running");
+
         itemsName = selectedSports.toArray(new String[0]);
         gridView = (GridView) view.findViewById(R.id.outdoorSportsGrid);
         btnGo = view.findViewById(R.id.outdoorSportsButton);
