@@ -7,7 +7,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OutdoorInviteFriendsAdapterItem"></activity>
+        <activity android:name=".FriendsInviteBlockActivity"></activity>
+        <activity android:name=".OutdoorInviteFriendsAdapterItem" />
         <activity android:name=".OutdoorInviteFriendsActivity" />
         <activity android:name=".OutdoorEventActivity" />
         <activity android:name=".OutdoorDateTimeActivity" />
