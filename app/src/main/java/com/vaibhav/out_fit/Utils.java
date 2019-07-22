@@ -11,5 +11,5 @@ public class Utils {
     public static final String ForgotPassword_Fragment = "ForgotPassword_Fragment";
     public static final String[] sports = new String[]{
             "Cricket", "Soccer", "Baseball", "Running", "Cycling", "Jogging", "Tennis",
-            "Badminton", "Basketball", "Volleyball"};
+            "Badminton", "Basketball", "Volleyball","Rugby"};
 }
