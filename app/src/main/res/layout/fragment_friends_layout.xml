@@ -9,9 +9,16 @@
     android:background="@color/background_color"
     tools:context=".OutdoorInviteFriendsActivity">
 
+    <Spinner
+        android:id="@+id/friendsSportSelection"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
     <ListView
         android:id="@+id/friendsList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content">
+
+    </ListView>
 
 </LinearLayout>
