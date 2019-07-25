@@ -38,15 +38,5 @@ public class OutdoorEventActivity extends AppCompatActivity {
             }
         });
 
-        Button btnGet2=(Button)findViewById(R.id.outdoorEventButton);
-        btnGet2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(OutdoorEventActivity.this,OutdoorInviteFriendsActivity.class);
-                intent.putExtra("SPORT", sport_name);
-                startActivity(intent);
-            }
-        });
-
     }
 }

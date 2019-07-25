@@ -5,88 +5,105 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:paddingTop="5dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     android:background="@color/background_color"
     tools:context=".OutdoorDateTimeActivity">
 
-    <ImageButton
-        android:id="@+id/CloseButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:background="#ff0000"
-        android:src="@android:drawable/ic_menu_close_clear_cancel" />
-
-    <LinearLayout
-        android:id="@+id/datetime_layout"
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:orientation="vertical" >
+        android:layout_height="fill_parent" >
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/datetime_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="SET DATE AND TIME"
-            android:textColor="@color/white_greyish"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="0dp"
+            android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/DateText"
-        android:singleLine="true"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/date_icon"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:hint="Date"
-        android:padding="10dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="25sp"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
+                android:text="SET DATE AND TIME"
+                android:textColor="@color/white_greyish"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="@color/white_greyish" />
+            <EditText
+                android:id="@+id/DateText"
+                android:singleLine="true"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/date_icon"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:hint="Date"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="20sp"/>
 
-        <EditText
-            android:id="@+id/TimeText"
-            android:singleLine="true"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/time_icon"
-            android:drawablePadding="8dp"
-            android:gravity="center_vertical"
-            android:hint="Time"
-            android:padding="10dp"
-            android:layout_marginTop="50dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="25sp" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/white_greyish" />
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
-            android:background="@color/white_greyish" />
+            <EditText
+                android:id="@+id/TimeText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/time_icon"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:hint="Time"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/dateTimeButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/button_selector"
-            android:padding="3dp"
-            android:text="CONFIRM"
-            android:textColor="#009688"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/white_greyish" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="INVITE FRIENDS"
+                android:textColor="@color/white_greyish"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/displayFriendsList"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"></ListView>
+
+            <Button
+                android:id="@+id/dateTimeButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_selector"
+                android:padding="3dp"
+                android:text="CONFIRM"
+                android:textColor="#009688"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>

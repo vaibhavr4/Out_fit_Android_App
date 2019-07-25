@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp">
 
@@ -159,19 +159,5 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-        <Button
-            android:id="@+id/outdoorEventButton"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/card"
-            android:layout_gravity="center"
-            android:background="@drawable/button_selector"
-            android:drawableLeft="@drawable/invite"
-            android:padding="3dp"
-            android:text="INVITE FRIENDS"
-            android:textColor="#000000"
-            android:textSize="17sp"
-            android:textStyle="bold" />
     </LinearLayout>
 </FrameLayout>

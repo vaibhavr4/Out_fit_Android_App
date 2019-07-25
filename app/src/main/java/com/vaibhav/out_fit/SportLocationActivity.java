@@ -178,7 +178,6 @@ public class SportLocationActivity extends FragmentActivity implements OnMapRead
             mMap.setMyLocationEnabled(true);
         }
 
-        Button buttonGo = findViewById(R.id.confirmLocationButton);
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {

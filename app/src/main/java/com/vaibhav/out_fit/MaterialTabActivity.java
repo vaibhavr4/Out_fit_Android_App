@@ -56,7 +56,9 @@ public class MaterialTabActivity extends AppCompatActivity {
                 switch(id)
                 {
                     case R.id.account:
-                        Toast.makeText(MaterialTabActivity.this, "My Account", Toast.LENGTH_SHORT).show();break;
+                        Context currentContext=MaterialTabActivity.this;
+                        Intent intents= new Intent(MaterialTabActivity.this,UserProfileActivity.class);
+                        currentContext.startActivity(intents);break;
                     case R.id.settings:
                         Toast.makeText(MaterialTabActivity.this, "Settings",Toast.LENGTH_SHORT).show();break;
                     case R.id.mysports:

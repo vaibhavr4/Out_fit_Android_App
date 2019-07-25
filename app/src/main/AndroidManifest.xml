@@ -34,8 +34,7 @@
             android:name=".SportLocationActivity"
             android:label="@string/title_activity_sport_location"></activity>
         <activity android:name=".FriendsInviteBlockActivity" />
-        <!--<activity android:name=".OutdoorInviteFriendsAdapterItem" />-->
-        <activity android:name=".OutdoorInviteFriendsActivity" />
+        <activity android:name=".UserProfileActivity" />
         <activity android:name=".OutdoorEventActivity" />
         <activity android:name=".OutdoorDateTimeActivity" />
         <activity android:name=".OutdoorMapActivity" />

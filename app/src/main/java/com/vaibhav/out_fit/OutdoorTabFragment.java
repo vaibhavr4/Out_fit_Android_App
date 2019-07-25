@@ -33,7 +33,7 @@ public OutdoorTabFragment(){}
          */
         ArrayList<String> selectedSports = new ArrayList();
         selectedSports.add("Cricket");
-        selectedSports.add("Football");
+        selectedSports.add("Soccer");
         selectedSports.add("Cycling");
         selectedSports.add("Running");
 

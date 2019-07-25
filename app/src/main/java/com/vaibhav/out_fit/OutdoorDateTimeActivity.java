@@ -1,19 +1,25 @@
 package com.vaibhav.out_fit;
 
+import android.content.Context;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TimePicker;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import android.app.TimePickerDialog;
 import android.app.DatePickerDialog;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 public class OutdoorDateTimeActivity extends AppCompatActivity {
 
@@ -24,6 +30,9 @@ public class OutdoorDateTimeActivity extends AppCompatActivity {
     DatePickerDialog picker2;
     EditText eText2;
     Button btnGet2;
+
+    ListView listView;
+    ArrayList<OutdoorInviteFriendsAdapterItem> friends = new ArrayList<OutdoorInviteFriendsAdapterItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +80,10 @@ public class OutdoorDateTimeActivity extends AppCompatActivity {
             }
         });
 
-        closeButton = (ImageButton) findViewById(R.id.CloseButton);
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(OutdoorDateTimeActivity.this,MaterialTabActivity.class);
-                startActivity(intent);
-            }
-        });
+        listView = findViewById(R.id.displayFriendsList);
+        populateList();
+        OutdoorInviteFriendsAdapter myAdapter = new OutdoorInviteFriendsAdapter(this,friends);
+        listView.setAdapter(myAdapter);
 
         btnGet2=(Button)findViewById(R.id.dateTimeButton);
         btnGet2.setOnClickListener(new View.OnClickListener() {
@@ -92,5 +97,24 @@ public class OutdoorDateTimeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void populateList(){
+        friends.add(new OutdoorInviteFriendsAdapterItem("Preethi"));
+        friends.add(new OutdoorInviteFriendsAdapterItem("Vaibhav"));
+        friends.add(new OutdoorInviteFriendsAdapterItem("Aashish"));
+        friends.add(new OutdoorInviteFriendsAdapterItem("Goku"));
+
+        friends.add(new OutdoorInviteFriendsAdapterItem("Aashish"));
+        friends.add(new OutdoorInviteFriendsAdapterItem("Goku"));
+    }
+
+    public void Invite(View view) {
+        Context context = getApplicationContext();
+        CharSequence text = "Invited for the game";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 0);
+        toast.show();
     }
 }
