@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +66,7 @@ public OutdoorTabFragment(){}
         btnGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), OutdoorMapActivity.class);
+                Intent intent = new Intent(getActivity(), SportLocationActivity.class);
                 intent.putExtra("SPORT", selectedString);
                 startActivity(intent);
             }
