@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import android.text.InputType;
@@ -26,6 +28,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import 	android.content.Context;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class Login_Fragment extends Fragment implements OnClickListener{
@@ -39,6 +47,7 @@ public class Login_Fragment extends Fragment implements OnClickListener{
     private static LinearLayout loginLayout;
     private static Animation shakeAnimation;
     private static FragmentManager fragmentManager;
+    private FirebaseAuth autenticationRef;
 
     public Login_Fragment() {
 
@@ -68,6 +77,7 @@ public class Login_Fragment extends Fragment implements OnClickListener{
         // Load ShakeAnimation
         shakeAnimation = AnimationUtils.loadAnimation(getActivity(),
                 R.anim.shake);
+        autenticationRef = FirebaseAuth.getInstance();
 
         // Setting text selector over textviews
         XmlResourceParser xrp = getResources().getXml(R.drawable.text_selector);
@@ -179,9 +189,24 @@ public class Login_Fragment extends Fragment implements OnClickListener{
             // Else do login and do your stuff
         else
         {
-            Context CurrentObj=getActivity();
-            Intent Intents= new Intent(this.getActivity(),MaterialTabActivity.class); //Start "Sedan" Activity
-            CurrentObj.startActivity(Intents);
+            String username = emailid.getText().toString();
+            String pwd = password.getText().toString();
+
+            autenticationRef.signInWithEmailAndPassword(username,pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        //let me into home activity
+                        Context CurrentObj=getActivity();
+                        Intent Intents= new Intent(getActivity(),MaterialTabActivity.class);
+                        CurrentObj.startActivity(Intents);
+                    }
+                    else{
+                        Toast.makeText(getActivity().getApplicationContext(),"Login Failed",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
         }
             }
 }

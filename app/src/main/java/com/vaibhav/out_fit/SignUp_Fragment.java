@@ -1,5 +1,7 @@
 package com.vaibhav.out_fit;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,7 +10,11 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +23,18 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class SignUp_Fragment extends Fragment implements OnClickListener{
     private static View view;
@@ -25,6 +43,9 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
     private static TextView login;
     private static Button signUpButton;
     private static CheckBox terms_conditions;
+    private FirebaseAuth autenticationRef;
+    FirebaseFirestore db;
+    Map<String,Object> user = new HashMap();
 
     public SignUp_Fragment() {
 
@@ -76,8 +97,53 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
 
                 // Call checkValidation method
                 if(checkValidation()) {
+                    autenticationRef = FirebaseAuth.getInstance();
+                    db = FirebaseFirestore.getInstance();
+                    String email = emailId.getText().toString();
+                    String pwd = confirmPassword.getText().toString();
+                    String name = fullName.getText().toString();
+                    String phone = mobileNumber.getText().toString();
+                    String loc = location.getText().toString();
+                    user.put("name",name);
+                    user.put("email",email);
+                    user.put("phone",phone);
+                    user.put("location",loc);
+
+
+// Add a new document with a generated ID
+                            db.collection("users")
+                            .add(user)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error adding document", e);
+                                }
+                            });
+
+                    // handle user registration
+                    autenticationRef.createUserWithEmailAndPassword(email,pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            //if registration is successful let me in
+                            if(task.isSuccessful())
+                            {
+                                Toast.makeText(getActivity().getApplicationContext(),"Registration Successful",Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(getActivity().getApplicationContext(),"Registration Failed",Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
                     Context CurrentObj = getActivity();
-                    Intent Intents = new Intent(this.getActivity(), SportsGrid.class); //Start "Sedan" Activity
+                    Intent Intents = new Intent(this.getActivity(), SportsGrid.class);
                     CurrentObj.startActivity(Intents);
                     break;
                 }
@@ -110,6 +176,9 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
         Pattern p = Pattern.compile(Utils.regEx);
         Matcher m = p.matcher(getEmailId);
 
+        Pattern p1 = Pattern.compile(Utils.phoneregEx);
+        Matcher m1 = p1.matcher(getMobileNumber);
+
         // Check if all strings are null or not
         if (getFullName.equals("") || getFullName.length() == 0
                 || getEmailId.equals("") || getEmailId.length() == 0
@@ -126,6 +195,11 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
         else if (!m.find()) {
             new CustomToast().Show_Toast(getActivity(), view,
                     "Your Email Id is Invalid.");
+            return false;
+        }
+        else if(!m1.find()){
+            new CustomToast().Show_Toast(getActivity(), view,
+                    "Your Phone number is Invalid.");
             return false;
         }
 
