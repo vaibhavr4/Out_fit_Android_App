@@ -2,8 +2,9 @@ package com.vaibhav.out_fit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,7 +22,7 @@ import utils.UserSportsModel;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class SportsGrid extends AppCompatActivity {
+public class SportsInterestGridActivity extends AppCompatActivity {
 
     private GridView gridView;
     private View btnGo;
@@ -84,7 +85,7 @@ public class SportsGrid extends AppCompatActivity {
 
                             }
                         });
-                Intent intent = new Intent(SportsGrid.this, MaterialTabActivity.class);
+                Intent intent = new Intent(SportsInterestGridActivity.this, MaterialTabActivity.class);
                 intent.putStringArrayListExtra("SELECTED_SPORTS", selectedStrings);
                 startActivity(intent);
             }

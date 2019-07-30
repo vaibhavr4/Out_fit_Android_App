@@ -31,8 +31,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import utils.UserModel;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -45,7 +48,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
     private static CheckBox terms_conditions;
     private FirebaseAuth autenticationRef;
     FirebaseFirestore db;
-    Map<String,Object> user = new HashMap();
+    UserModel userModel;
 
     public SignUp_Fragment() {
 
@@ -99,33 +102,11 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
                 if(checkValidation()) {
                     autenticationRef = FirebaseAuth.getInstance();
                     db = FirebaseFirestore.getInstance();
-                    String email = emailId.getText().toString();
-                    String pwd = confirmPassword.getText().toString();
-                    String name = fullName.getText().toString();
-                    String phone = mobileNumber.getText().toString();
-                    String loc = location.getText().toString();
-                    user.put("name",name);
-                    user.put("email",email);
-                    user.put("phone",phone);
-                    user.put("location",loc);
-
-
-// Add a new document with a generated ID
-                            db.collection("users")
-                            .add(user)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "Error adding document", e);
-                                }
-                            });
-
+                    final String email = emailId.getText().toString();
+                    final String pwd = confirmPassword.getText().toString();
+                    final String name = fullName.getText().toString();
+                    final String phone = mobileNumber.getText().toString();
+                    final String loc = location.getText().toString();
                     // handle user registration
                     autenticationRef.createUserWithEmailAndPassword(email,pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -134,6 +115,27 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
                             if(task.isSuccessful())
                             {
                                 Toast.makeText(getActivity().getApplicationContext(),"Registration Successful",Toast.LENGTH_SHORT).show();
+                                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+                                final String currentUserId = currentFirebaseUser.getUid();
+                                userModel = new UserModel(currentUserId,email,pwd,name,loc,phone);
+                                // Add a new document with a generated ID
+                                db.collection("users")
+                                        .document()
+                                        .set(userModel)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "Register user snapshot added ID:"+currentUserId);
+
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d(TAG, "Register user snapshot failed" + currentUserId);
+
+                                            }
+                                        });
                             }
                             else
                             {
@@ -142,6 +144,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
 
                         }
                     });
+
                     Context CurrentObj = getActivity();
                     Intent Intents = new Intent(this.getActivity(), SportsGrid.class);
                     CurrentObj.startActivity(Intents);
