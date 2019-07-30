@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "478951174106",
+    "firebase_url": "https://out-fit-4df2a.firebaseio.com",
+    "project_id": "out-fit-4df2a",
+    "storage_bucket": "out-fit-4df2a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478951174106:android:f3250a27f63cc5f7",
+        "android_client_info": {
+          "package_name": "com.vaibhav.out_fit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "478951174106-ip4irjba4ll7u93ie5kc4u6so2ehm39m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vaibhav.out_fit",
+            "certificate_hash": "97a8a56ec274add07ef54106f4672c6494ff5b99"
+          }
+        },
+        {
+          "client_id": "478951174106-72br7n8l2af088k4fpvhtdgbju0ka5ai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2hznSSSUusdb-DD5mGumiLssGlD_Xn28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "478951174106-72br7n8l2af088k4fpvhtdgbju0ka5ai.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
