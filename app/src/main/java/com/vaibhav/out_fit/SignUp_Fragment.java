@@ -73,7 +73,6 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
         confirmPassword = (EditText) view.findViewById(R.id.confirmPassword);
         signUpButton = (Button) view.findViewById(R.id.signUpBtn);
         login = (TextView) view.findViewById(R.id.already_user);
-        terms_conditions = (CheckBox) view.findViewById(R.id.terms_conditions);
 
         // Setting text selector over textviews
         XmlResourceParser xrp = getResources().getXml(R.drawable.text_selector);
@@ -210,15 +209,6 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
         else if (!getConfirmPassword.equals(getPassword)) {
             new CustomToast().Show_Toast(getActivity(), view,
                     "Both password doesn't match.");
-            return false;
-        }
-
-            // Make sure user should check Terms and Conditions checkbox
-        else if (!terms_conditions.isChecked()) {
-
-
-            new CustomToast().Show_Toast(getActivity(), view,
-                    "Please select Terms and Conditions.");
             return false;
         }
 

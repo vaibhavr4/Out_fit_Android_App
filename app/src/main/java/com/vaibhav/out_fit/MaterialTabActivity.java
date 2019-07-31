@@ -71,12 +71,12 @@ public class MaterialTabActivity extends AppCompatActivity {
                         Context CurrentObj=MaterialTabActivity.this;
                         Intent Intents= new Intent(MaterialTabActivity.this,SportsInterestGridActivity.class);
                         CurrentObj.startActivity(Intents);
-//                        break;
-//                    case R.id.logout:
-//                        autenticationRef.signOut();
-//                        Context obj=MaterialTabActivity.this;
-//                        Intent intent= new Intent(MaterialTabActivity.this,MainActivity.class);
-//                        obj.startActivity(intent);
+                        break;
+                    case R.id.logout:
+                        autenticationRef.signOut();
+                        Context obj=MaterialTabActivity.this;
+                        Intent intent= new Intent(MaterialTabActivity.this,MainActivity.class);
+                        obj.startActivity(intent);
                     default:
                         return true;
                 }

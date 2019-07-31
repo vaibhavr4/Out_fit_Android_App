@@ -26,15 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // On close icon click finish activity
-    findViewById(R.id.close_activity).setOnClickListener(
-            new OnClickListener() {
 
-              @Override
-              public void onClick(View arg0) {
-                finish();
-
-              }
-            });
   }
 
   // Replace Login Fragment with animation

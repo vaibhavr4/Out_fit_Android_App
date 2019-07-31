@@ -14,8 +14,6 @@ public class UserSportsModel {
 
     }
 
-
-
     public ArrayList<String> getSports() {
         return sports;
     }
