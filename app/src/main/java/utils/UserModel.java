@@ -1,8 +1,7 @@
 package utils;
 
 public class UserModel {
-    public UserModel(String userId, String email, String password, String name, String location, String phone) {
-        this.userId = userId;
+    public UserModel(String email, String password, String name, String location, String phone) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -10,12 +9,9 @@ public class UserModel {
         this.phone = phone;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public UserModel()
+    {
+        //no arg constructor
     }
 
     public String getEmail() {
@@ -58,7 +54,7 @@ public class UserModel {
         this.phone = phone;
     }
 
-    String userId;
+
     String email;
     String password;
     String name;

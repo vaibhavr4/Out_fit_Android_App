@@ -103,7 +103,11 @@ public class ForgotPassword_Fragment extends Fragment implements OnClickListener
 
       // Else submit email id and fetch passwod or do your stuff
     else
-      Toast.makeText(getActivity(), "Get Forgot Password.",
-              Toast.LENGTH_SHORT).show();
+    {
+
+      Toast.makeText(getActivity(), "Please check your mail for further instructions",
+              Toast.LENGTH_LONG).show();
+    }
+
   }
 }

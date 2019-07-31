@@ -10,12 +10,12 @@ import java.util.List;
 public class SportsGridViewAdapter extends BaseAdapter{
   private Activity activity;
   private String[] strings;
-  public List selectedPositions;
+  public ArrayList selectedPositions;
 
-  public SportsGridViewAdapter(String[] strings, Activity activity) {
+  public SportsGridViewAdapter(String[] strings, Activity activity,ArrayList<Integer> selectedPositions) {
     this.strings = strings;
     this.activity = activity;
-    selectedPositions = new ArrayList<>();
+    this.selectedPositions = selectedPositions;
   }
 
   @Override

@@ -5,8 +5,7 @@ import java.util.List;
 
 public class UserSportsModel {
 
-    public UserSportsModel(String userId, ArrayList<String> sports) {
-        this.userId = userId;
+    public UserSportsModel( ArrayList<String> sports) {
         this.sports = sports;
     }
 
@@ -15,15 +14,9 @@ public class UserSportsModel {
 
     }
 
-    public String getUserId() {
-        return userId;
-    }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
-    public List<String> getSports() {
+    public ArrayList<String> getSports() {
         return sports;
     }
 
@@ -31,6 +24,5 @@ public class UserSportsModel {
         this.sports = sports;
     }
 
-    String userId;
     ArrayList<String> sports;
 }
