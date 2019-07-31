@@ -22,6 +22,14 @@
             android:layout_marginTop="0dp"
             android:orientation="vertical" >
 
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Description"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:paddingTop="25dp"/>
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

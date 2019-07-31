@@ -11,6 +11,8 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.vaibhav.out_fit.MaterialTabAdapter;
 
 public class MaterialTabActivity extends AppCompatActivity {
@@ -22,6 +24,8 @@ public class MaterialTabActivity extends AppCompatActivity {
     private DrawerLayout dl;
     private ActionBarDrawerToggle t;
     private NavigationView nv;
+
+    private FirebaseAuth autenticationRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,8 @@ public class MaterialTabActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         setIcons();
+
+        autenticationRef = FirebaseAuth.getInstance();
 
 
         dl = (DrawerLayout)findViewById(R.id.activity_test_nav);
@@ -65,6 +71,12 @@ public class MaterialTabActivity extends AppCompatActivity {
                         Context CurrentObj=MaterialTabActivity.this;
                         Intent Intents= new Intent(MaterialTabActivity.this,SportsInterestGridActivity.class);
                         CurrentObj.startActivity(Intents);
+                        break;
+                    case R.id.logout:
+                        autenticationRef.signOut();
+                        Context obj=MaterialTabActivity.this;
+                        Intent intent= new Intent(MaterialTabActivity.this,MainActivity.class);
+                        obj.startActivity(intent);
                     default:
                         return true;
                 }
