@@ -10,5 +10,8 @@
     <item android:id="@+id/mysports"
         android:icon="@drawable/sports_interested"
         android:title="Sports Interest"/>
+    <!--<item android:id="@+id/logout"-->
+        <!--android:icon="@drawable/logout"-->
+        <!--android:title="Logout"/>-->
 
 </menu>

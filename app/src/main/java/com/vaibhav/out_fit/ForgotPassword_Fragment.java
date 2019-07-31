@@ -3,10 +3,16 @@ package com.vaibhav.out_fit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.vaibhav.out_fit.R;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +27,7 @@ public class ForgotPassword_Fragment extends Fragment implements OnClickListener
 
   private static EditText emailId;
   private static TextView submit, back;
+  private FirebaseAuth autenticationRef;
 
   public ForgotPassword_Fragment() {
 
@@ -31,6 +38,7 @@ public class ForgotPassword_Fragment extends Fragment implements OnClickListener
                            Bundle savedInstanceState) {
     view = inflater.inflate(R.layout.forgotpassword_layout, container,
             false);
+    autenticationRef = FirebaseAuth.getInstance();
     initViews();
     setListeners();
     return view;
@@ -104,9 +112,22 @@ public class ForgotPassword_Fragment extends Fragment implements OnClickListener
       // Else submit email id and fetch passwod or do your stuff
     else
     {
+      autenticationRef.sendPasswordResetEmail(getEmailId)
+              .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                  Toast.makeText(getActivity(), "Please check your mail for further instructions",
+                          Toast.LENGTH_LONG).show();
+                }
+              })
+              .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                  Toast.makeText(getActivity(), "Please try again later",
+                          Toast.LENGTH_LONG).show();
+                }
+              });
 
-      Toast.makeText(getActivity(), "Please check your mail for further instructions",
-              Toast.LENGTH_LONG).show();
     }
 
   }
