@@ -19,7 +19,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/fullName"
+        android:id="@+id/fullName_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -27,7 +27,7 @@
         android:drawableLeft="@drawable/user"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
-        android:text="VAIBHAV RANGARAJAN"
+        android:text="FULL NAME"
         android:inputType="textCapWords"
         android:padding="10dp"
         android:singleLine="true"
@@ -40,13 +40,13 @@
         android:background="@color/white_greyish" />
 
     <TextView
-        android:id="@+id/userEmailId"
+        android:id="@+id/userEmailId_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/email"
-        android:text="vaibhavr4@gmail.com"
+        android:text="EMAIL"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:inputType="textEmailAddress"
@@ -61,12 +61,12 @@
         android:background="@color/white_greyish" />
 
     <TextView
-        android:id="@+id/mobileNumber"
+        android:id="@+id/mobileNumber_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
-        android:text="8572720403"
+        android:text="PHONE"
         android:drawableLeft="@drawable/phone"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
@@ -82,13 +82,13 @@
         android:background="@color/white_greyish" />
 
     <TextView
-        android:id="@+id/location"
+        android:id="@+id/location_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/location"
-        android:text="891 Huntington Ave"
+        android:text="LOCATION"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:inputType="textCapWords"
@@ -103,16 +103,15 @@
         android:background="@color/white_greyish" />
 
     <TextView
-        android:id="@+id/password"
+        android:id="@+id/password_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
-        android:text="abcdef"
+        android:text="PASSWORD"
         android:drawableLeft="@drawable/password"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
-        android:inputType="textPassword"
         android:padding="10dp"
         android:singleLine="true"
         android:textColor="@color/white"

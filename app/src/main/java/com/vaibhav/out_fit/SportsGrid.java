@@ -26,7 +26,7 @@ public class SportsGrid extends AppCompatActivity {
     private GridView gridView;
     private View btnGo;
     private ArrayList<String> selectedStrings;
-    private static final String[] numbers = Utils.sports;
+    private static final String[] sports = Utils.sports;
     FirebaseFirestore db;
     UserSportsModel userSportsModel;
 
@@ -40,7 +40,7 @@ public class SportsGrid extends AppCompatActivity {
 
         selectedStrings = new ArrayList<>();
 
-        final SportsGridViewAdapter adapter = new SportsGridViewAdapter(numbers, this);
+        final SportsGridViewAdapter adapter = new SportsGridViewAdapter(sports, this,new ArrayList());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -66,9 +66,9 @@ public class SportsGrid extends AppCompatActivity {
                 db = FirebaseFirestore.getInstance();
                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
                 final String currentUserId = currentFirebaseUser.getUid();
-                userSportsModel = new UserSportsModel(currentUserId,selectedStrings);
+                userSportsModel = new UserSportsModel(selectedStrings);
                 db.collection("user_sports")
-                        .document()
+                        .document(currentUserId)
                         .set(userSportsModel)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

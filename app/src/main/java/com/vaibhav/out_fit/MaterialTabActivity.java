@@ -63,7 +63,7 @@ public class MaterialTabActivity extends AppCompatActivity {
                         Toast.makeText(MaterialTabActivity.this, "Settings",Toast.LENGTH_SHORT).show();break;
                     case R.id.mysports:
                         Context CurrentObj=MaterialTabActivity.this;
-                        Intent Intents= new Intent(MaterialTabActivity.this,SportsGrid.class);
+                        Intent Intents= new Intent(MaterialTabActivity.this,SportsInterestGridActivity.class);
                         CurrentObj.startActivity(Intents);
                     default:
                         return true;

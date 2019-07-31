@@ -117,10 +117,10 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
                                 Toast.makeText(getActivity().getApplicationContext(),"Registration Successful",Toast.LENGTH_SHORT).show();
                                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
                                 final String currentUserId = currentFirebaseUser.getUid();
-                                userModel = new UserModel(currentUserId,email,pwd,name,loc,phone);
+                                userModel = new UserModel(email,pwd,name,loc,phone);
                                 // Add a new document with a generated ID
                                 db.collection("users")
-                                        .document()
+                                        .document(currentUserId)
                                         .set(userModel)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

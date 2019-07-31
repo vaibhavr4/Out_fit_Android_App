@@ -1,10 +1,15 @@
 package com.vaibhav.out_fit;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +19,19 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
+
+import utils.UserModel;
+import utils.UserSportsModel;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class OutdoorTabFragment extends Fragment {
     private GridView gridView;
@@ -24,18 +41,39 @@ public class OutdoorTabFragment extends Fragment {
     String selectedItem;
     TextView GridViewItems,BackSelectedItem;
     int backposition = -1;
+    ArrayList<String> selectedSports = new ArrayList();
+
+    Activity activity = getActivity();
+    FirebaseFirestore db;
+    UserSportsModel userSportsModel;
+    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+    final String currentUserId = currentFirebaseUser.getUid();
 
 public OutdoorTabFragment(){}
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*
-        Database storage of selected sports to be included
-         */
-        ArrayList<String> selectedSports = new ArrayList();
-        selectedSports.add("Cricket");
-        selectedSports.add("Soccer");
-        selectedSports.add("Cycling");
-        selectedSports.add("Running");
+        db = FirebaseFirestore.getInstance();
+
+        db.collection("user_sports")
+                .document(currentUserId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        userSportsModel = documentSnapshot.toObject(UserSportsModel.class);
+                        selectedSports = userSportsModel.getSports();
+                        itemsName = selectedSports.toArray(new String[0]);
+                        gridView = (GridView) view.findViewById(R.id.outdoorSportsGrid);
+                        btnGo = view.findViewById(R.id.outdoorSportsButton);
+                        gridView.setAdapter(new TextAdapter(getActivity()));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG,"Profile not invalid");
+                    }
+                });
 
         itemsName = selectedSports.toArray(new String[0]);
         gridView = (GridView) view.findViewById(R.id.outdoorSportsGrid);
@@ -116,6 +154,7 @@ public OutdoorTabFragment(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_outdoor_layout, container, false);
     }
 }
