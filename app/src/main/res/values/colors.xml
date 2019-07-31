@@ -11,4 +11,5 @@
     <color name="button_selectorcolor">#9E9E9E</color>
     <color name="background">#363636</color>
     <color name="orange">#FF6600</color>
+    <color name="grey">#828282</color>
 </resources>

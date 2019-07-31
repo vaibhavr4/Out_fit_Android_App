@@ -2,6 +2,7 @@ package com.vaibhav.out_fit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -44,8 +45,14 @@ public class FriendsListAdapter extends BaseAdapter {
             view = View.inflate(context, R.layout.friends_list_adapter_item, null);
         }
 
-        TextView textView = view.findViewById(R.id.PersonNameAdapterItem);
+        final String friendsItemString =friendsItems.get(i).getFriendsName();
+        Log.d("Button",friendsItemString);
+        TextView textView = view.findViewById(R.id.SportNameAdapterItem);
         textView.setText(friendsItems.get(i).getFriendsName());
+
+        //TODO: Set friends of this sport here
+        TextView listOfFriends = view.findViewById(R.id.allFriendsInSports);
+        listOfFriends.setText("ALL FRIENDS OF THIS SPORT");
 
         Button button = view.findViewById(R.id.inviteButton0);
         button.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +60,7 @@ public class FriendsListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Context context = v.getContext();
                 Intent intent = new Intent(context,FriendsInviteBlockActivity.class);
-                intent.putExtra("SPORT", "CRICKET");
+                intent.putExtra("SPORT", friendsItemString);
                 context.startActivity(intent);
             }
         });
