@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import utils.FriendListModel;
 import utils.FriendsInviteBlockModel;
 import utils.UserSportsModel;
 
@@ -62,35 +63,43 @@ public class FriendsInviteBlockActivity extends AppCompatActivity {
                 db.collection("user_sports").document(currentUserId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        UserSportsModel curUser = documentSnapshot.toObject(UserSportsModel.class);
-
-                        ListIterator iter = allDocs.listIterator();
-                        while(iter.hasNext())
-                        {
-                            final QueryDocumentSnapshot doc = (QueryDocumentSnapshot) iter.next();
-                            if (!doc.getId().equals(currentUserId))
-                            {
-                                UserSportsModel newUser = doc.toObject(UserSportsModel.class);
-                                Log.d("USERS", "loggedinuser "+ curUser.getSports().toString());
-                                Log.d("USERS", "new user "+newUser.getSports().toString());
-                                Log.d("USERS", "sportname - "+sport_name);
-                                if (newUser.getSports().contains(sport_name))
+                        final UserSportsModel curUser = documentSnapshot.toObject(UserSportsModel.class);
+                        db.collection("friend_list").document(currentUserId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                FriendListModel currFriendList = documentSnapshot.toObject(FriendListModel.class);
+                                Log.d("USERS", "currfriends list - "+ currFriendList.getFriendList().toString());
+                                ArrayList<String> currSportsFriendsList = currFriendList.getFriendList().get(sport_name);
+                                Log.d("USERS", "currfriends list - "+ currSportsFriendsList.toString());
+                                ListIterator iter = allDocs.listIterator();
+                                while(iter.hasNext())
                                 {
-                                    db.collection("users").document(doc.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            final String newUserName = documentSnapshot.getString("name");
+                                    final QueryDocumentSnapshot doc = (QueryDocumentSnapshot) iter.next();
+                                    if (!doc.getId().equals(currentUserId) && !currSportsFriendsList.contains(doc.getId()))
+                                    {
+                                        UserSportsModel newUser = doc.toObject(UserSportsModel.class);
+                                        Log.d("USERS", "loggedinuser "+ curUser.getSports().toString());
+                                        Log.d("USERS", "new user "+newUser.getSports().toString());
+                                        Log.d("USERS", "sportname - "+sport_name);
+                                        if (newUser.getSports().contains(sport_name))
+                                        {
+                                            db.collection("users").document(doc.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                    final String newUserName = documentSnapshot.getString("name");
 
-                                            Log.d("USERS", documentSnapshot.getData().toString());
-                                            Log.d("USERSNAME", documentSnapshot.getString("name"));
-                                            friends.add(new FriendsInviteBlockModel(currentUserId,newUserName, doc.getId(),sport_name));
-                                            callback.OnCallback(friends);
+                                                    Log.d("USERS", documentSnapshot.getData().toString());
+                                                    Log.d("USERSNAME", documentSnapshot.getString("name"));
+                                                    friends.add(new FriendsInviteBlockModel(currentUserId,newUserName, doc.getId(),sport_name));
+                                                    callback.OnCallback(friends);
+                                                }
+                                            });
                                         }
-                                    });
+                                    }
+
                                 }
                             }
-
-                        }
+                        });
 
                     }
                 });
