@@ -1,16 +1,10 @@
 package com.vaibhav.out_fit;
 
-import android.content.Context;
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,13 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import utils.FriendsInviteBlockModel;
 import utils.UserSportsModel;
 
 public class FriendsInviteBlockActivity extends AppCompatActivity {
 
     FirebaseFirestore db;
     ListView listView;
-    ArrayList<FriendsInviteBlockAdapterItem> friends = new ArrayList<FriendsInviteBlockAdapterItem>();
+    ArrayList<FriendsInviteBlockModel> friends = new ArrayList<FriendsInviteBlockModel>();
     String sport_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +39,7 @@ public class FriendsInviteBlockActivity extends AppCompatActivity {
         if (friends.isEmpty()) {
             populateList(new MyCallbackFriends() {
                 @Override
-                public void OnCallback(ArrayList<FriendsInviteBlockAdapterItem> list) {
+                public void OnCallback(ArrayList<FriendsInviteBlockModel> list) {
                     Log.d("USERS", "friends in oncreate " + friends);
                     FriendsInviteBlockAdapter myAdapter = new FriendsInviteBlockAdapter(sport.getContext(), friends);
                     listView.setAdapter(myAdapter);
@@ -75,22 +70,20 @@ public class FriendsInviteBlockActivity extends AppCompatActivity {
                             final QueryDocumentSnapshot doc = (QueryDocumentSnapshot) iter.next();
                             if (!doc.getId().equals(currentUserId))
                             {
-                            //    Log.d("USERS", doc.getId());
                                 UserSportsModel newUser = doc.toObject(UserSportsModel.class);
-                            //    Log.d("USERS",doc.getData().values().toString());
                                 Log.d("USERS", "loggedinuser "+ curUser.getSports().toString());
                                 Log.d("USERS", "new user "+newUser.getSports().toString());
                                 Log.d("USERS", "sportname - "+sport_name);
                                 if (newUser.getSports().contains(sport_name))
                                 {
-                                    Log.d("USERS", "common sport");
                                     db.collection("users").document(doc.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                                             final String newUserName = documentSnapshot.getString("name");
+
                                             Log.d("USERS", documentSnapshot.getData().toString());
-                                            Log.d("USERS", documentSnapshot.getString("name"));
-                                            friends.add(new FriendsInviteBlockAdapterItem(newUserName, doc.getId(),sport_name));
+                                            Log.d("USERSNAME", documentSnapshot.getString("name"));
+                                            friends.add(new FriendsInviteBlockModel(currentUserId,newUserName, doc.getId(),sport_name));
                                             callback.OnCallback(friends);
                                         }
                                     });
@@ -109,25 +102,8 @@ public class FriendsInviteBlockActivity extends AppCompatActivity {
         callback.OnCallback(friends);
     }
 
-//    public void InviteFriends(View view) {
-//        Context context = getApplicationContext();
-//        CharSequence text = "Invited";
-//        int duration = Toast.LENGTH_SHORT;
-//        Toast toast = Toast.makeText(context, text, duration);
-//        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 0);
-//        toast.show();
-//    }
-//
-//    public void Block(View view) {
-//        Context context = getApplicationContext();
-//        CharSequence text = "Blocked";
-//        int duration = Toast.LENGTH_SHORT;
-//        Toast toast = Toast.makeText(context, text, duration);
-//        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 0);
-//        toast.show();
-//    }
 }
 
 interface MyCallbackFriends{
-    void OnCallback(ArrayList<FriendsInviteBlockAdapterItem> list);
+    void OnCallback(ArrayList<FriendsInviteBlockModel> list);
 }
