@@ -8,9 +8,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 
-import utils.FriendsListAdapterItem;
+import utils.FriendsRequestListAdapterItem;
 
 
 public class FriendRequestsTabFragment extends Fragment {
@@ -19,22 +25,30 @@ public class FriendRequestsTabFragment extends Fragment {
     ListView eventRequestsListView;
     ArrayList<String> friendRequestItems = new ArrayList<>();
     ArrayList<String> eventRequestItems = new ArrayList<>();
-    //ArrayList<NewsFeedAdapterItem> newsFeed = new ArrayList<>();
-    //ArrayList<NewsFeedAdapterItem> eventsFeed = new ArrayList<>();
+    DatabaseReference databaseReference;
+    FirebaseFirestore db;
+    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+    final String currentUserId = currentFirebaseUser.getUid();
+
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference databaseChildRef = databaseReference.child("FriendRequests").child(currentUserId);
+
         friendRequestsListView = view.findViewById(R.id.friendRequestList);
+
         eventRequestsListView = view.findViewById(R.id.eventRequestList);
 
         populateList();
 
-        FriendsListAdapterItem friendRequestAdapter = new FriendsListAdapterItem(getActivity(),friendRequestItems);
+        FriendsRequestListAdapterItem friendRequestAdapter = new FriendsRequestListAdapterItem(getActivity(),databaseChildRef);
 
-        FriendsListAdapterItem eventRequestAdapter = new FriendsListAdapterItem(getActivity(),eventRequestItems);
+//        FriendsRequestListAdapterItem eventRequestAdapter = new FriendsRequestListAdapterItem(getActivity(),eventRequestItems);
 
         friendRequestsListView.setAdapter(friendRequestAdapter);
-        eventRequestsListView.setAdapter(eventRequestAdapter);
+//        eventRequestsListView.setAdapter(eventRequestAdapter);
 
         //Set click listeners
         friendRequestsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
