@@ -43,6 +43,7 @@ public class FriendsRequestListAdapterItem extends BaseAdapter {
     ImageView rejectFriend;
     Map<String, ArrayList<String>> friendList1 = new HashMap<>();
     Map<String, ArrayList<String>> friendList2 = new HashMap<>();
+    ArrayList<String> keysDataSnapshot = new ArrayList();
 
 
     public FriendsRequestListAdapterItem(Context context, DatabaseReference dbChildReference) {
@@ -59,17 +60,20 @@ public class FriendsRequestListAdapterItem extends BaseAdapter {
         @Override
         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
             dataSnapshotResultsFromDB.add(dataSnapshot);
+            keysDataSnapshot.add(dataSnapshot.getKey());
             notifyDataSetChanged();
         }
 
         @Override
         public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+            notifyDataSetChanged();
         }
 
         @Override
         public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-           dataSnapshotResultsFromDB.remove(dataSnapshot);
+            int index = keysDataSnapshot.indexOf(dataSnapshot.getKey());
+           dataSnapshotResultsFromDB.remove(index);
+           keysDataSnapshot.remove(index);
             notifyDataSetChanged();
         }
 
@@ -249,7 +253,8 @@ public class FriendsRequestListAdapterItem extends BaseAdapter {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot friendSnapshot: dataSnapshot.getChildren()) {
-                    friendSnapshot.getRef().removeValue();
+                    if(friendSnapshot.child("sport").getValue(String.class)==friendsInviteBlockModel.sport)
+                        friendSnapshot.getRef().removeValue();
                 }
             }
 
@@ -259,9 +264,6 @@ public class FriendsRequestListAdapterItem extends BaseAdapter {
             }
         });
     }
-
-
-
 
 });
 

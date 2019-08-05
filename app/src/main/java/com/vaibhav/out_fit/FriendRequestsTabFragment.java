@@ -34,6 +34,7 @@ public class FriendRequestsTabFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference databaseChildRef = databaseReference.child("FriendRequests").child(currentUserId);
 
@@ -54,12 +55,7 @@ public class FriendRequestsTabFragment extends Fragment {
         friendRequestsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //trigger second activity - char info
-//                Intent intent = new Intent(getActivity(),);
-//
-//                //pass char name to second activity
-//                intent.putExtra("CharacterName",favCharacters.get(i).getCharName());
-//                startActivity(intent);
+
 
             }
         });

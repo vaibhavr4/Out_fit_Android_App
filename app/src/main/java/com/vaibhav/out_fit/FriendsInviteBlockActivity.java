@@ -68,9 +68,11 @@ public class FriendsInviteBlockActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 FriendListModel currFriendList = documentSnapshot.toObject(FriendListModel.class);
-                                Log.d("USERS", "currfriends list - "+ currFriendList.getFriendList().toString());
-                                ArrayList<String> currSportsFriendsList = currFriendList.getFriendList().get(sport_name);
-                                Log.d("USERS", "currfriends list - "+ currSportsFriendsList.toString());
+                                ArrayList<String> currSportsFriendsList;
+                                if(currFriendList==null || currFriendList.getFriendList().get(sport_name)==null)
+                                    currSportsFriendsList = new ArrayList();
+                                else
+                                    currSportsFriendsList = currFriendList.getFriendList().get(sport_name);
                                 ListIterator iter = allDocs.listIterator();
                                 while(iter.hasNext())
                                 {

@@ -71,7 +71,7 @@ public class SportLocationActivity extends FragmentActivity implements OnMapRead
         {
             searchString = "playground";
         }
-        else if(sport.toLowerCase().equals("jogging")||sport.toLowerCase().equals("running"))
+        else if(sport.toLowerCase().equals("jogging")||sport.toLowerCase().equals("running") || sport.toLowerCase().equals("cycling"))
         {
             searchString = "jogging trail";
         }
