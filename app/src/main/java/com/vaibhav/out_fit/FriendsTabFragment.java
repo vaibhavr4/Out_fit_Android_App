@@ -26,6 +26,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import utils.FriendListModel;
 import utils.UserModel;
@@ -40,10 +42,12 @@ public class FriendsTabFragment extends Fragment {
     String sportsSelected;
 
     ArrayList<String> friendsSports = new ArrayList<String>();
-    ArrayList<String> friendList = new ArrayList<>();
+    Map<String,ArrayList<String>> sportFriendList = new HashMap();
+//    ArrayList<String> friendList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_friends_layout, container, false);
     }
 
@@ -68,13 +72,21 @@ public class FriendsTabFragment extends Fragment {
                             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                 sportsSelected = friendsSportSelection.getItemAtPosition(i).toString();
                                 sportNameCard.setText(sportsSelected);
-                                populateList2(new MyCallback() {
-                                    @Override
-                                    public void OnCallback(ArrayList<String> list) {
-                                        ArrayAdapter<String> friendListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, friendList);
-                                        listView.setAdapter(friendListAdapter);
-                                    }
-                                });
+
+                                if(sportFriendList.get(sportsSelected).isEmpty()) {
+                                    populateList2(new MyCallback() {
+                                        @Override
+                                        public void OnCallback(ArrayList<String> list) {
+                                            ArrayAdapter<String> friendListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sportFriendList.get(sportsSelected));
+                                            listView.setAdapter(friendListAdapter);
+                                        }
+                                    });
+                                }
+                                else
+                                {
+                                    ArrayAdapter<String> friendListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sportFriendList.get(sportsSelected));
+                                    listView.setAdapter(friendListAdapter);
+                                }
 
                             }
 
@@ -89,6 +101,42 @@ public class FriendsTabFragment extends Fragment {
 
             }
 
+            else
+            {
+                ArrayAdapter<String> friendsSportAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, friendsSports);
+                friendsSportAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                friendsSportSelection.setAdapter(friendsSportAdapter);
+                friendsSportSelection.setBackgroundColor(getResources().getColor(R.color.white_greyish,null));
+
+                friendsSportSelection.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        sportsSelected = friendsSportSelection.getItemAtPosition(i).toString();
+                        sportNameCard.setText(sportsSelected);
+                            if(sportFriendList.get(sportsSelected).isEmpty()) {
+                                populateList2(new MyCallback() {
+                                    @Override
+                                    public void OnCallback(ArrayList<String> list) {
+                                        ArrayAdapter<String> friendListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
+                                        listView.setAdapter(friendListAdapter);
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                ArrayAdapter<String> friendListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sportFriendList.get(sportsSelected));
+                                listView.setAdapter(friendListAdapter);
+                            }
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+            }
+
 
 
         Button button = view.findViewById(R.id.inviteButton0);
@@ -101,6 +149,9 @@ public class FriendsTabFragment extends Fragment {
                 context.startActivity(intent);
             }
         });
+
+
+
         }
 
         private void populateList(final MyCallback callback){
@@ -113,6 +164,7 @@ public class FriendsTabFragment extends Fragment {
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     UserSportsModel userSportsModel = documentSnapshot.toObject(UserSportsModel.class);
                     for (String str: userSportsModel.getSports()) {
+                        sportFriendList.put(str.trim(),new ArrayList<String>());
                         friendsSports.add(str.trim());
                     }
                     callback.OnCallback(friendsSports);
@@ -131,33 +183,41 @@ public class FriendsTabFragment extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 FriendListModel friendListModel = documentSnapshot.toObject(FriendListModel.class);
-                Log.d("friend_list",documentSnapshot.getData().toString());
+//                Log.d("friend_list",documentSnapshot.getData().toString());
                 ArrayList<String> userIds = new ArrayList();
-                Log.d("friend_list",sportsSelected.toString());
-                Log.d("friend_list","Cric:"+friendListModel.getFriendList().get(sportsSelected.toString()).toString());
-                if(friendListModel.getFriendList().get(sportsSelected.toString())==null)
+
+                if(friendListModel==null)
                 {
-                    friendList = new ArrayList<>();
+//                    friendList = new ArrayList<>();
+                    callback.OnCallback(sportFriendList.get(sportsSelected));
                 }
                 else
                 {
                     userIds = friendListModel.getFriendList().get(sportsSelected.toString());
-                    for(String id:userIds)
-                    {
-                        Log.d("friend_list","One id:"+id.toString());
-                        final DocumentReference userDocRef = db.collection("users").document(id);
-                        userDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                UserModel userModel = documentSnapshot.toObject(UserModel.class);
-                                Log.d("friend_list","UserModel"+documentSnapshot.getData().toString());
-                                Log.d("friend_list","UserModel"+userModel.getName().toString());
-                                friendList.add(userModel.getName().toString());
-                                callback.OnCallback(friendList);
-                            }
-                        });
+                    if(userIds==null)
+                        callback.OnCallback(sportFriendList.get(sportsSelected));
+                    else if(!userIds.isEmpty()) {
+                        for (String id : userIds) {
+                            Log.d("friend_list", "One id:" + id.toString());
+                            final DocumentReference userDocRef = db.collection("users").document(id);
+                            userDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    UserModel userModel = documentSnapshot.toObject(UserModel.class);
+                                    Log.d("friend_list", "UserModel" + documentSnapshot.getData().toString());
+                                    Log.d("friend_list", "UserModel" + userModel.getName().toString());
+                                    sportFriendList.get(sportsSelected).add(userModel.getName());
+//                                friendList.add(userModel.getName().toString());
+                                    callback.OnCallback(sportFriendList.get(sportsSelected));
+                                }
+                            });
+                        }
+                        Log.d("friend_list", sportFriendList.get(sportsSelected).toString());
                     }
-                    Log.d("friend_list",friendList.toString());
+                    else
+                    {
+                        callback.OnCallback(sportFriendList.get(sportsSelected));
+                    }
                 }
 
 
