@@ -1,6 +1,7 @@
 package utils;
 
 import android.content.Context;
+import android.media.Image;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,6 +117,7 @@ public class FriendsRequestListAdapterItem extends BaseAdapter {
             view = View.inflate(context, R.layout.friend_request_adapter_item, null);
             viewHolder.friendName = view.findViewById(R.id.friendName);
             viewHolder.acceptFriend = view.findViewById(R.id.acceptFriend);
+            viewHolder.rejectFriend = view.findViewById(R.id.rejectFriend);
             viewHolder.friendSport = view.findViewById(R.id.friendSport);
             view.setTag(viewHolder);
 
@@ -267,6 +269,30 @@ public class FriendsRequestListAdapterItem extends BaseAdapter {
 
 });
 
+//-------------------reject friend------------------------------------------------------------
+
+        viewHolder.rejectFriend.setClickable(true);
+        viewHolder.rejectFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Query realTimeFriendQuery = dbChildReference.orderByChild("senderId").equalTo(friendsInviteBlockModel.senderId);
+                realTimeFriendQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot friendSnapshot: dataSnapshot.getChildren()) {
+                            if(friendSnapshot.child("sport").getValue(String.class)==friendsInviteBlockModel.sport)
+                                friendSnapshot.getRef().removeValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("RealtimeDB", "onCancelled", databaseError.toException());
+                    }
+                });
+            }
+        });
+
  //-----------------------------------------------------------------------------------------------
         return view;
     }
@@ -275,6 +301,7 @@ public class FriendsRequestListAdapterItem extends BaseAdapter {
         TextView friendName;
         TextView friendSport;
         ImageView acceptFriend;
+        ImageView rejectFriend;
     }
 
 
