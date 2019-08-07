@@ -4,6 +4,7 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,6 +23,7 @@ public class OutdoorEventActivity extends AppCompatActivity {
     ArrayList<OutdoorInviteFriendsModel> friendsInvited = new ArrayList();
     String sender;
     ArrayList<String> receiverList = new ArrayList();
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,6 @@ public class OutdoorEventActivity extends AppCompatActivity {
         String time_name = args.getString("TIME");
         time.setText(time_name);
 
-
-
         friendsInvited = (ArrayList<OutdoorInviteFriendsModel>)args.getSerializable("friendList");
         sender = args.getString("CREATOR");
         senderName.setText(sender);
@@ -60,20 +60,30 @@ public class OutdoorEventActivity extends AppCompatActivity {
 
         }
 
-        ListView listView = findViewById(R.id.eventFriendList);
+        listView = findViewById(R.id.eventFriendList);
+
+        listView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                listView.getParent().requestDisallowInterceptTouchEvent(true);
+
+                return false;
+            }
+        });
         ArrayAdapter<String> friendListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, receiverList);
         listView.setAdapter(friendListAdapter);
 
-        ImageButton closeButton = (ImageButton) findViewById(R.id.CloseButtonEvent);
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(OutdoorEventActivity.this,MaterialTabActivity.class);
-                startActivity(intent);
-            }
-        });
-
         Log.d("FRIENDSCOUNT",String.valueOf(friendsInvited.size()));
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        Intent intent = new Intent(OutdoorEventActivity.this, MaterialTabActivity.class);
+        startActivity(intent);
     }
 }

@@ -37,7 +37,7 @@ public class OutdoorTabFragment extends Fragment {
     private GridView gridView;
     private View btnGo;
     String[] itemsName;
-    private String selectedString;
+    private String selectedString="";
     String selectedItem;
     TextView GridViewItems,BackSelectedItem;
     int backposition = -1;
@@ -78,6 +78,7 @@ public OutdoorTabFragment(){}
         itemsName = selectedSports.toArray(new String[0]);
         gridView = (GridView) view.findViewById(R.id.outdoorSportsGrid);
         btnGo = view.findViewById(R.id.outdoorSportsButton);
+        btnGo.setEnabled(false);
         gridView.setAdapter(new TextAdapter(getActivity()));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -97,6 +98,7 @@ public OutdoorTabFragment(){}
                 }
                 backposition = position;
                 selectedString = itemsName[backposition];
+                btnGo.setEnabled(true);
             }
         });
 

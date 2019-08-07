@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -128,6 +129,17 @@ public class OutdoorDateTimeActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.displayFriendsList);
 
+        listView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                listView.getParent().requestDisallowInterceptTouchEvent(true);
+
+                return false;
+            }
+        });
+
         if (friends.isEmpty()) {
             populateList(new MyCallback2() {
                 @Override
@@ -152,29 +164,34 @@ public class OutdoorDateTimeActivity extends AppCompatActivity {
                 String eventLocation = location;
                 String eventTime = eText.getText().toString();
 
-                final OutdoorEventModel outdoorEventModel = new OutdoorEventModel(currentUserId,currUserName,
-                        eventDescription,eventDate,eventTime,eventLocation,sport,new ArrayList<String>());
+                if(eventDate.length()==0 || eventDescription.length()==0 || eventLocation.length()==0
+                || eventTime.length()==0){
+                    Toast.makeText(OutdoorDateTimeActivity.this, "Enter All Details", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    final OutdoorEventModel outdoorEventModel = new OutdoorEventModel(currentUserId,currUserName,
+                            eventDescription,eventDate,eventTime,eventLocation,sport,new ArrayList<String>());
 
 
-                db.collection("events")
-                        .add(outdoorEventModel)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                eventId = documentReference.getId();
-                                for(OutdoorInviteFriendsModel friendInvite:friendsInvited)
-                                {
-                                    friendInvite.setEventId(eventId);
-                                    final DatabaseReference databaseChildRef = databaseReference.child("EventRequests");
-                                    final DatabaseReference databaseChildOfChildRef = databaseChildRef.child(friendInvite.getReceiverId());
-                                    databaseChildOfChildRef.push().setValue(friendInvite);
-                                }
+                    db.collection("events")
+                            .add(outdoorEventModel)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    eventId = documentReference.getId();
+                                    for(OutdoorInviteFriendsModel friendInvite:friendsInvited)
+                                    {
+                                        friendInvite.setEventId(eventId);
+                                        final DatabaseReference databaseChildRef = databaseReference.child("EventRequests");
+                                        final DatabaseReference databaseChildOfChildRef = databaseChildRef.child(friendInvite.getReceiverId());
+                                        databaseChildOfChildRef.push().setValue(friendInvite);
+                                    }
 
-                                final DocumentReference documentRef = db.collection("user_events")
-                                        .document(currentUserId);
-                                documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    final DocumentReference documentRef = db.collection("user_events")
+                                            .document(currentUserId);
+                                    documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                             if(task.isSuccessful())
                                             {
                                                 DocumentSnapshot documentSnapshot = task.getResult();
@@ -191,16 +208,16 @@ public class OutdoorDateTimeActivity extends AppCompatActivity {
                                                 }
                                                 documentRef.set(userEventModel, SetOptions.merge());
                                             }
-                                        CharSequence text = "Event created Successfully";
-                                        int duration = Toast.LENGTH_LONG;
-                                        Toast toast = Toast.makeText(getApplicationContext(), text, duration);
-                                        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 0);
-                                        toast.show();
-                                    }
-                                });
+                                            CharSequence text = "Event created Successfully";
+                                            int duration = Toast.LENGTH_LONG;
+                                            Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                                            toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 0);
+                                            toast.show();
+                                        }
+                                    });
 
-                            }
-                        });
+                                }
+                            });
 
 
 
@@ -220,20 +237,22 @@ public class OutdoorDateTimeActivity extends AppCompatActivity {
 
 
 
-                Intent intent = new Intent(OutdoorDateTimeActivity.this,OutdoorEventActivity.class);
+                    Intent intent = new Intent(OutdoorDateTimeActivity.this,OutdoorEventActivity.class);
 //                startActivity(intent);
-                Bundle args = new Bundle();
+                    Bundle args = new Bundle();
 
-                args.putString("DESC",eventDescription);
-                args.putString("DATE",eventDate);
-                args.putString("PLAYGROUND", eventLocation);
-                args.putString("TIME", eventTime);
-                args.putString("SPORT", sport);
-                args.putString("CREATOR",currUserName);
-                args.putParcelableArrayList("friendList",friendsInvited);
-                intent.putExtra("BUNDLE",args);
+                    args.putString("DESC",eventDescription);
+                    args.putString("DATE",eventDate);
+                    args.putString("PLAYGROUND", eventLocation);
+                    args.putString("TIME", eventTime);
+                    args.putString("SPORT", sport);
+                    args.putString("CREATOR",currUserName);
+                    args.putParcelableArrayList("friendList",friendsInvited);
+                    intent.putExtra("BUNDLE",args);
 
-                startActivity(intent);
+                    startActivity(intent);
+                }
+
             }
         });
     }

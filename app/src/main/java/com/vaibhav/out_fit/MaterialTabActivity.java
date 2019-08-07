@@ -114,6 +114,12 @@ public class MaterialTabActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    public void onBackPressed() {
+        finish();
+        Intent intent= new Intent(MaterialTabActivity.this,MaterialTabActivity.class);
+        startActivity(intent);
+    }
 
 
 }
