@@ -14,7 +14,7 @@
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/inviteButton"
+        android:id="@+id/eventInvite"
         android:layout_width="130dp"
         android:layout_height="37dp"
         android:layout_alignParentRight="true"

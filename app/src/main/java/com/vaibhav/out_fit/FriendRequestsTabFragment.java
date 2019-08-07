@@ -2,6 +2,8 @@ package com.vaibhav.out_fit;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+import utils.EventRequestListAdapterItem;
 import utils.FriendsRequestListAdapterItem;
 
 
@@ -23,7 +26,6 @@ public class FriendRequestsTabFragment extends Fragment {
 
     ListView friendRequestsListView;
     ListView eventRequestsListView;
-    ArrayList<String> friendRequestItems = new ArrayList<>();
     ArrayList<String> eventRequestItems = new ArrayList<>();
     DatabaseReference databaseReference;
     FirebaseFirestore db;
@@ -37,6 +39,7 @@ public class FriendRequestsTabFragment extends Fragment {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference databaseChildRef = databaseReference.child("FriendRequests").child(currentUserId);
+        final DatabaseReference databaseEventChildRef = databaseReference.child("EventRequests").child(currentUserId);
 
         friendRequestsListView = view.findViewById(R.id.friendRequestList);
 
@@ -46,10 +49,10 @@ public class FriendRequestsTabFragment extends Fragment {
 
         FriendsRequestListAdapterItem friendRequestAdapter = new FriendsRequestListAdapterItem(getActivity(),databaseChildRef);
 
-//        FriendsRequestListAdapterItem eventRequestAdapter = new FriendsRequestListAdapterItem(getActivity(),eventRequestItems);
+        EventRequestListAdapterItem eventRequestAdapter = new EventRequestListAdapterItem(getActivity(),databaseEventChildRef);
 
         friendRequestsListView.setAdapter(friendRequestAdapter);
-//        eventRequestsListView.setAdapter(eventRequestAdapter);
+        eventRequestsListView.setAdapter(eventRequestAdapter);
 
         //Set click listeners
         friendRequestsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,12 +67,7 @@ public class FriendRequestsTabFragment extends Fragment {
     }
 
     private void populateList() {
-        friendRequestItems.add("Goku");
-        friendRequestItems.add("Vegeta");
-        friendRequestItems.add("Picollo");
-        friendRequestItems.add("Frieza");
-        friendRequestItems.add("Beerus");
-        friendRequestItems.add("Gohan");
+//
 
         eventRequestItems.add("Play Cricket- Scheduled for 5PM");
         eventRequestItems.add("Play Basketball- Scheduled for 6PM");
