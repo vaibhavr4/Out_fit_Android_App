@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="70dp"
+    android:background="@color/cardview_dark_background">
+
+    <TextView
+        android:id="@+id/eventRequestDesc"
+        android:layout_width="313dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:lines="2"
+        android:maxLines="2"
+        android:paddingLeft="50px"
+        android:text="Batman is not SUperman also Superman is not Batman"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+
+
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="45dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="6dp"
+        android:paddingTop="7dp"
+        android:id="@+id/eventRequestConfirm"
+        android:src="@drawable/confirm_friend" />
+
+    <ImageView
+        android:layout_width="31dp"
+        android:layout_height="42dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="6dp"
+        android:paddingTop="12dp"
+        android:id="@+id/eventRequestReject"
+        android:src="@drawable/delete_friend" />
+
+</LinearLayout>
