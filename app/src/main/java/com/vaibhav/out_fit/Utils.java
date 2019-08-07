@@ -21,7 +21,8 @@ public class Utils {
 
     //Email Validation pattern
     public static final String regEx = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}\\b";
-    public static final String phoneregEx ="(0/91)?[7-9][0-9]{9}";
+    public static final String phoneregEx ="(0/91)?[1-9][0-9]{9}";
+    public static final String passwordRegEx = "(.{6,16})";
 
     //Fragments Tags
     public static final String Login_Fragment = "Login_Fragment";

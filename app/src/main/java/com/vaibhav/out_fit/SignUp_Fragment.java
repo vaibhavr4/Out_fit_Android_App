@@ -147,6 +147,8 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
                     Context CurrentObj = getActivity();
                     Intent Intents = new Intent(this.getActivity(), SportsGrid.class);
                     CurrentObj.startActivity(Intents);
+                    emailId.setText("");fullName.setText("");mobileNumber.setText("");
+                    location.setText("");password.setText("");confirmPassword.setText("");
                     break;
                 }
                 else
@@ -181,14 +183,17 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
         Pattern p1 = Pattern.compile(Utils.phoneregEx);
         Matcher m1 = p1.matcher(getMobileNumber);
 
+        Pattern p2 = Pattern.compile(Utils.passwordRegEx);
+        Matcher m2 = p2.matcher(getPassword);
+
         // Check if all strings are null or not
-        if (getFullName.equals("") || getFullName.length() == 0
+        if (getFullName.equals("") || getFullName.trim().length() == 0
                 || getEmailId.equals("") || getEmailId.length() == 0
                 || getMobileNumber.equals("") || getMobileNumber.length() == 0
-                || getLocation.equals("") || getLocation.length() == 0
+                || getLocation.equals("") || getLocation.trim().length() == 0
                 || getPassword.equals("") || getPassword.length() == 0
                 || getConfirmPassword.equals("")
-                || getConfirmPassword.length() == 0) {
+                || getConfirmPassword.trim().length() == 0) {
             new CustomToast().Show_Toast(getActivity(), view,
                     "All fields are required.");
             return false;
@@ -202,6 +207,12 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
         else if(!m1.find()){
             new CustomToast().Show_Toast(getActivity(), view,
                     "Your Phone number is Invalid.");
+            return false;
+        }
+
+        else if(!m2.find()){
+            new CustomToast().Show_Toast(getActivity(), view,
+                    "Password is Invalid");
             return false;
         }
 
