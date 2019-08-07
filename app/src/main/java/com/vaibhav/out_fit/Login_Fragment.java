@@ -200,6 +200,8 @@ public class Login_Fragment extends Fragment implements OnClickListener{
                         Context CurrentObj=getActivity();
                         Intent Intents= new Intent(getActivity(),MaterialTabActivity.class);
                         CurrentObj.startActivity(Intents);
+                        emailid.setText("");
+                        password.setText("");
                     }
                     else{
                         Toast.makeText(getActivity().getApplicationContext(),"Login Failed",Toast.LENGTH_SHORT).show();

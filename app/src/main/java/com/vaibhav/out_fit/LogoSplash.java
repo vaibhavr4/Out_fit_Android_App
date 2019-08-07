@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 public class LogoSplash extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY_LENGTH = 4000;
+    private final int SPLASH_DISPLAY_LENGTH = 1500;
     Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
