@@ -251,11 +251,14 @@ public class FriendsRequestListAdapterItem extends BaseAdapter {
         });
 
         Query realTimeFriendQuery = dbChildReference.orderByChild("senderId").equalTo(friendsInviteBlockModel.senderId);
+        Log.d("RealTImFriend",friendsInviteBlockModel.senderId.toString());
         realTimeFriendQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot friendSnapshot: dataSnapshot.getChildren()) {
-                    if(friendSnapshot.child("sport").getValue(String.class)==friendsInviteBlockModel.sport)
+                    Log.d("RealTImFriend",friendSnapshot.child("sport").toString());
+                    Log.d("RealTImFriend","Model "+friendsInviteBlockModel.sport.toString());
+                    if(friendSnapshot.child("sport").getValue(String.class).equals(friendsInviteBlockModel.sport.toString()))
                         friendSnapshot.getRef().removeValue();
                 }
             }

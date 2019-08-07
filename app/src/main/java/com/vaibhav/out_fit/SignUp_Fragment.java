@@ -124,6 +124,11 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
+                                                Context CurrentObj = getActivity();
+                                                Intent Intents = new Intent(getActivity(), SportsGrid.class);
+                                                CurrentObj.startActivity(Intents);
+                                                emailId.setText("");fullName.setText("");mobileNumber.setText("");
+                                                location.setText("");password.setText("");confirmPassword.setText("");
                                                 Log.d(TAG, "Register user snapshot added ID:"+currentUserId);
 
                                             }
@@ -144,11 +149,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
                         }
                     });
 
-                    Context CurrentObj = getActivity();
-                    Intent Intents = new Intent(this.getActivity(), SportsGrid.class);
-                    CurrentObj.startActivity(Intents);
-                    emailId.setText("");fullName.setText("");mobileNumber.setText("");
-                    location.setText("");password.setText("");confirmPassword.setText("");
+
                     break;
                 }
                 else
