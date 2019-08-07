@@ -18,7 +18,7 @@
         android:textSize="25sp"
         android:textStyle="bold" />
 
-    <TextView
+    <EditText
         android:id="@+id/fullName_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
-    <TextView
+    <EditText
         android:id="@+id/userEmailId_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
-    <TextView
+    <EditText
         android:id="@+id/mobileNumber_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
-    <TextView
+    <EditText
         android:id="@+id/location_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
-    <TextView
+    <EditText
         android:id="@+id/password_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -121,5 +121,12 @@
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="@color/white_greyish" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="UPDATE"
+        android:id="@+id/updateProfile"
+        android:layout_marginTop="60dp"/>
 
 </LinearLayout>
