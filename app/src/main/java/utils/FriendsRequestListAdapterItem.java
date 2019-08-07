@@ -283,7 +283,7 @@ public class FriendsRequestListAdapterItem extends BaseAdapter {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot friendSnapshot: dataSnapshot.getChildren()) {
-                            if(friendSnapshot.child("sport").getValue(String.class)==friendsInviteBlockModel.sport)
+                            if(friendSnapshot.child("sport").getValue(String.class).equals(friendsInviteBlockModel.sport.toString()))
                                 friendSnapshot.getRef().removeValue();
                         }
                     }

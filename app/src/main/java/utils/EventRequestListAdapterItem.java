@@ -214,8 +214,39 @@ public class EventRequestListAdapterItem extends BaseAdapter {
             }
         });
 
+//----------------------------reject event---------------------------------------------------------
+
+        viewHolder.rejectEvent.setClickable(true);
+        viewHolder.rejectEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Query realTimeEventQuery = dbChildReference.orderByChild("eventId").equalTo(outdoorInviteFriendsModel.eventId);
+                realTimeEventQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot eventSnapshot: dataSnapshot.getChildren()) {
+                            eventSnapshot.getRef().removeValue();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
+
+
+
         return view;
     }
+
+
+
 
 
 //-----------------------Get event from Id---------------------------------------------------
