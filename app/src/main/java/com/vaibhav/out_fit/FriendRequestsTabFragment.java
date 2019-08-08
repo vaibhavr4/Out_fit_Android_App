@@ -55,14 +55,12 @@ public class FriendRequestsTabFragment extends Fragment {
 
         eventRequestsListView = view.findViewById(R.id.eventRequestList);
         TextView emptyEvent = view.findViewById(R.id.NoEventRequest);
-        emptyEvent.setText("No event requests right now!!");
-        emptyEvent.setGravity(RelativeLayout.CENTER_HORIZONTAL);
+        emptyEvent.setText("No event requests right now..");
 
         eventRequestsListView.setEmptyView(emptyEvent);
 
         TextView emptyFriends = view.findViewById(R.id.NoFriendRequest);
-        emptyFriends.setText("No friend requests right now!!");
-        emptyFriends.setGravity(RelativeLayout.CENTER_HORIZONTAL);
+        emptyFriends.setText("No friend requests right now..");
         friendRequestsListView.setEmptyView(emptyFriends);
 
 
