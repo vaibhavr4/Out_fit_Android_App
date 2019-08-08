@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -58,6 +59,21 @@ public class FriendsTabFragment extends Fragment {
 
             friendsSportSelection = view.findViewById(R.id.friendsSportSelection);
             listView = view.findViewById(R.id.friendsList);
+        listView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                listView.getParent().requestDisallowInterceptTouchEvent(true);
+
+                return false;
+            }
+        });
+
+        TextView noFriend = (TextView) view.findViewById(R.id.NoSportFriends);
+        noFriend.setText("No Friends for this sport at this time!");
+        listView.setEmptyView(noFriend);
+
             if (friendsSports.isEmpty()) {
                 populateList(new MyCallback() {
                     @Override

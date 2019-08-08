@@ -48,6 +48,10 @@ public class NewsFeedTabFragment extends Fragment {
         newsListView = view.findViewById(R.id.newsList);
         eventsListView = view.findViewById(R.id.eventsList);
 
+        TextView noEvents = (TextView) view.findViewById(R.id.NoEvents);
+        noEvents.setText("No Events Scheduled right now!");
+        eventsListView.setEmptyView(noEvents);
+
         if(newsItems.isEmpty()){
             populateList(new MyCallbackNewsFeed() {
                 @Override
