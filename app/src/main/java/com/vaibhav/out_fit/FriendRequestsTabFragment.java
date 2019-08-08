@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 import utils.EventRequestListAdapterItem;
+import utils.FriendsInviteBlockModel;
 import utils.FriendsRequestListAdapterItem;
 import utils.OutdoorEventModel;
 import utils.OutdoorInviteFriendsModel;
@@ -65,6 +66,10 @@ public class FriendRequestsTabFragment extends Fragment {
         friendRequestsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+              Intent intent = new Intent(getContext(), FriendRequestProfile.class);
+                FriendsInviteBlockModel friendsInviteBlockModel = (FriendsInviteBlockModel)adapterView.getItemAtPosition(i);
+                intent.putExtra("friend_id", friendsInviteBlockModel.getSenderId());
+                startActivity(intent);
 
             }
         });

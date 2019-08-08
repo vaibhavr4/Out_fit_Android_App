@@ -18,8 +18,8 @@
         android:textSize="25sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/fullName_prof"
+    <TextView
+        android:id="@+id/friendname_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -39,8 +39,8 @@
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
-    <EditText
-        android:id="@+id/userEmailId_prof"
+    <TextView
+        android:id="@+id/friendemail_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -60,8 +60,8 @@
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
-    <EditText
-        android:id="@+id/mobileNumber_prof"
+    <TextView
+        android:id="@+id/friendmobile_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -81,8 +81,8 @@
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
-    <EditText
-        android:id="@+id/location_prof"
+    <TextView
+        android:id="@+id/friendlocation_prof"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -102,31 +102,10 @@
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
-    <EditText
-        android:id="@+id/password_prof"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@android:color/transparent"
-        android:text="PASSWORD"
-        android:drawableLeft="@drawable/password"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:padding="10dp"
-        android:singleLine="true"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="@color/white_greyish" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="UPDATE"
-        android:id="@+id/updateProfile"
-        android:layout_marginTop="60dp"/>
 
 </LinearLayout>
