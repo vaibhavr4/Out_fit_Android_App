@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,6 +54,17 @@ public class FriendRequestsTabFragment extends Fragment {
         friendRequestsListView = view.findViewById(R.id.friendRequestList);
 
         eventRequestsListView = view.findViewById(R.id.eventRequestList);
+        TextView emptyEvent = view.findViewById(R.id.NoEventRequest);
+        emptyEvent.setText("No event requests right now!!");
+        emptyEvent.setGravity(RelativeLayout.CENTER_HORIZONTAL);
+
+        eventRequestsListView.setEmptyView(emptyEvent);
+
+        TextView emptyFriends = view.findViewById(R.id.NoFriendRequest);
+        emptyFriends.setText("No friend requests right now!!");
+        emptyFriends.setGravity(RelativeLayout.CENTER_HORIZONTAL);
+        friendRequestsListView.setEmptyView(emptyFriends);
+
 
 //        populateList();
 

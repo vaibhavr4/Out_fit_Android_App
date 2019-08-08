@@ -32,6 +32,17 @@
             android:dividerHeight="1px"
             android:background="@color/cardview_dark_background"
             android:layout_height="wrap_content"></ListView>
+
+        <TextView
+            android:id="@+id/NoFriendRequest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="119dp"
+            android:layout_marginBottom="226dp"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/white_greyish"
+            android:textSize="16sp" />
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
@@ -51,7 +62,9 @@
             android:layout_marginTop="10sp"
             android:text="Event Requests"
             android:textColor="@color/orange"
+            android:id="@+id/eventReqText"
             android:textSize="20sp" />
+
         <ListView
             android:id="@+id/eventRequestList"
             android:layout_marginTop="40sp"
@@ -61,6 +74,19 @@
             android:dividerHeight="1px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></ListView>
+
+        <TextView
+            android:id="@+id/NoEventRequest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/eventReqText"
+            android:layout_alignBottom="@+id/eventRequestList"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="129dp"
+            android:layout_marginBottom="202dp"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/white_greyish"
+            android:textSize="16sp" />
     </RelativeLayout>
 
 </LinearLayout>

@@ -103,146 +103,130 @@ public class EventRequestListAdapterItem extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        final ViewHolder viewHolder;
+
         final OutdoorInviteFriendsModel outdoorInviteFriendsModel = getItem(i);
 
         if(view == null) {
-            viewHolder = new ViewHolder();
+
             view = View.inflate(context, R.layout.event_request_adapter_item, null);
-            viewHolder.eventDesc = view.findViewById(R.id.eventRequestDesc);
-            viewHolder.acceptEvent = view.findViewById(R.id.eventRequestConfirm);
-            viewHolder.rejectEvent = view.findViewById(R.id.eventRequestReject);
+            final TextView eventDesc = view.findViewById(R.id.eventRequestDesc);
+            final ImageView acceptEvent = view.findViewById(R.id.eventRequestConfirm);
+            final ImageView rejectEvent = view.findViewById(R.id.eventRequestReject);
 
             populateEvents(new EventRequestCallback() {
                 @Override
                 public void OnCallback(String event) {
-                    Log.d("EventRequest","Event Desc: "+event);
-                    viewHolder.eventDesc.setText(event);
+                    Log.d("EventRequest", "Event Desc: " + event);
+                    eventDesc.setText(event);
                 }
-            },outdoorInviteFriendsModel.getEventId());
-
-            view.setTag(viewHolder);
-
-        }
-        else
-        {
-            viewHolder = (ViewHolder) view.getTag();
-        }
+            }, outdoorInviteFriendsModel.getEventId());
 
 
+            acceptEvent.setClickable(true);
+            acceptEvent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-        viewHolder.acceptEvent.setClickable(true);
-        viewHolder.acceptEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //get reference to check if any events exist in database for user to append
-                final DocumentReference documentReference = db.collection("user_events")
-                        .document(outdoorInviteFriendsModel.receiverId);
-                documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if(task.isSuccessful())
-                        {
-                            DocumentSnapshot documentSnapshot = task.getResult();
-                            if(documentSnapshot.exists())
-                            {
-                                UserEventModel userEventModel = documentSnapshot.toObject(UserEventModel.class);
-                                if(userEventModel!=null)
-                                {
-                                    userEventModel.getUserEvent().add(outdoorInviteFriendsModel.getEventId());
+                    //get reference to check if any events exist in database for user to append
+                    final DocumentReference documentReference = db.collection("user_events")
+                            .document(outdoorInviteFriendsModel.receiverId);
+                    documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot documentSnapshot = task.getResult();
+                                if (documentSnapshot.exists()) {
+                                    UserEventModel userEventModel = documentSnapshot.toObject(UserEventModel.class);
+                                    if (userEventModel != null) {
+                                        userEventModel.getUserEvent().add(outdoorInviteFriendsModel.getEventId());
+                                    }
+                                    documentReference.set(userEventModel);
+                                } else {
+                                    //if no events exist for the user create an event
+                                    ArrayList<String> tempEventList = new ArrayList<>();
+                                    tempEventList.add(outdoorInviteFriendsModel.getEventId());
+                                    final UserEventModel userEventModel = new UserEventModel();
+                                    userEventModel.setUserEvent(tempEventList);
+                                    documentReference.set(userEventModel);
                                 }
-                                documentReference.set(userEventModel);
                             }
-                            else
-                            {
-                                //if no events exist for the user create an event
-                                ArrayList<String> tempEventList = new ArrayList<>();
-                                tempEventList.add(outdoorInviteFriendsModel.getEventId());
-                                final UserEventModel userEventModel = new UserEventModel();
-                                userEventModel.setUserEvent(tempEventList);
-                                documentReference.set(userEventModel);
-                            }
-                        }
 
-                    }
-                });
+                        }
+                    });
 
 //----------------------add user to accepted invites in events--------------------------------------
-                final DocumentReference eventDocumentReference = db.collection("events")
-                        .document(outdoorInviteFriendsModel.eventId);
+                    final DocumentReference eventDocumentReference = db.collection("events")
+                            .document(outdoorInviteFriendsModel.eventId);
 
-                eventDocumentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if(task.isSuccessful()){
-                            DocumentSnapshot documentSnapshot = task.getResult();
-                            if(documentSnapshot.exists()){
-                                OutdoorEventModel outdoorEventModel = documentSnapshot.toObject(OutdoorEventModel.class);
-                                if(outdoorEventModel!=null)
-                                {
-                                    if(outdoorEventModel.getFriendsJoined()!=null)
-                                        outdoorEventModel.getFriendsJoined().add(outdoorInviteFriendsModel.getReceiverId());
-                                    else
-                                    {
-                                        ArrayList<String> friendsAccepted = new ArrayList();
-                                        friendsAccepted.add(outdoorInviteFriendsModel.getReceiverId());
+                    eventDocumentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot documentSnapshot = task.getResult();
+                                if (documentSnapshot.exists()) {
+                                    OutdoorEventModel outdoorEventModel = documentSnapshot.toObject(OutdoorEventModel.class);
+                                    if (outdoorEventModel != null) {
+                                        if (outdoorEventModel.getFriendsJoined() != null)
+                                            outdoorEventModel.getFriendsJoined().add(outdoorInviteFriendsModel.getReceiverId());
+                                        else {
+                                            ArrayList<String> friendsAccepted = new ArrayList();
+                                            friendsAccepted.add(outdoorInviteFriendsModel.getReceiverId());
+                                        }
+                                        eventDocumentReference.set(outdoorEventModel);
                                     }
-                                    eventDocumentReference.set(outdoorEventModel);
                                 }
                             }
                         }
-                    }
-                });
+                    });
 
 //-----------------------------------remove event request from realtime db---------------------------------
 
-                Query realTimeEventQuery = dbChildReference.orderByChild("eventId").equalTo(outdoorInviteFriendsModel.eventId);
-                realTimeEventQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot eventSnapshot: dataSnapshot.getChildren()) {
-                            eventSnapshot.getRef().removeValue();
+                    Query realTimeEventQuery = dbChildReference.orderByChild("eventId").equalTo(outdoorInviteFriendsModel.eventId);
+                    realTimeEventQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
+                                eventSnapshot.getRef().removeValue();
+                            }
+
+
                         }
 
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        });
+                        }
+                    });
+                }
+            });
 
 //----------------------------reject event---------------------------------------------------------
 
-        viewHolder.rejectEvent.setClickable(true);
-        viewHolder.rejectEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Query realTimeEventQuery = dbChildReference.orderByChild("eventId").equalTo(outdoorInviteFriendsModel.eventId);
-                realTimeEventQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot eventSnapshot: dataSnapshot.getChildren()) {
-                            eventSnapshot.getRef().removeValue();
+            rejectEvent.setClickable(true);
+            rejectEvent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Query realTimeEventQuery = dbChildReference.orderByChild("eventId").equalTo(outdoorInviteFriendsModel.eventId);
+                    realTimeEventQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
+                                eventSnapshot.getRef().removeValue();
+                            }
+
+
                         }
 
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        });
+                        }
+                    });
+                }
+            });
 
 
-
+        }
 
         return view;
     }
@@ -279,11 +263,6 @@ private void populateEvents(final EventRequestCallback callback,String eventId){
 //-----------------------------------get event from id end------------------------------------------
 
 
-    private static class ViewHolder{
-        TextView eventDesc;
-        ImageView acceptEvent;
-        ImageView rejectEvent;
-    }
 }
 
 interface EventRequestCallback{

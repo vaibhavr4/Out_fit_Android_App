@@ -51,32 +51,27 @@ public class MyEventsAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        final ViewHolder viewHolder;
+
         MyEventsAdapterItem myEventsAdapterItem = getItem(i);
         eventId = myEventsAdapterItem.getEvents();
-        if(view==null)
-        {
-            view = View.inflate(context, R.layout.my_events_adapter_item,null);
 
-            viewHolder = new ViewHolder();
-            viewHolder.textView = view.findViewById(R.id.eventAdapterItemDesc);
+            if(view==null) {
+                view = View.inflate(context, R.layout.my_events_adapter_item, null);
 
 
-            populateEvents(new MyEventsCallback() {
-                @Override
-                public void OnCallback(String event) {
-                    Log.d("EventRequest","Event Desc: "+event);
-                    viewHolder.textView.setText(event);
-                }
-            });
+                final TextView textView = view.findViewById(R.id.eventAdapterItemDesc);
 
-            view.setTag(viewHolder);
 
-        }
-        else
-        {
-            viewHolder = (ViewHolder) view.getTag();
-        }
+                populateEvents(new MyEventsCallback() {
+                    @Override
+                    public void OnCallback(String event) {
+                        Log.d("EventRequest", "Event Desc: " + event);
+                        textView.setText(event);
+                    }
+                });
+            }
+
+
 
 
         return view;
@@ -112,9 +107,6 @@ public class MyEventsAdapter extends BaseAdapter {
 //-----------------------------------get event from id end------------------------------------------
 
 
-    static class ViewHolder {
-        TextView textView;
-    }
 
 }
 interface MyEventsCallback{
