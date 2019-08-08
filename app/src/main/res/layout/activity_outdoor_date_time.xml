@@ -25,13 +25,24 @@
             android:orientation="vertical" >
 
             <EditText
+                android:id="@+id/eventDesc"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Description"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/description"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:hint="Description"
+                android:padding="10dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:id="@+id/eventDesc"
-                android:paddingTop="25dp"/>
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="20sp"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/white_greyish" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -57,7 +68,7 @@
                 android:hint="Date"
                 android:padding="10dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@android:color/darker_gray"
                 android:textSize="20sp"/>
 
             <View
@@ -78,7 +89,7 @@
                 android:padding="8dp"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@android:color/darker_gray"
                 android:textSize="20sp" />
 
             <View

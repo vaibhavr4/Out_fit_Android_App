@@ -112,6 +112,15 @@ public class EventRequestListAdapterItem extends BaseAdapter {
             viewHolder.eventDesc = view.findViewById(R.id.eventRequestDesc);
             viewHolder.acceptEvent = view.findViewById(R.id.eventRequestConfirm);
             viewHolder.rejectEvent = view.findViewById(R.id.eventRequestReject);
+
+            populateEvents(new EventRequestCallback() {
+                @Override
+                public void OnCallback(String event) {
+                    Log.d("EventRequest","Event Desc: "+event);
+                    viewHolder.eventDesc.setText(event);
+                }
+            },outdoorInviteFriendsModel.getEventId());
+
             view.setTag(viewHolder);
 
         }
@@ -120,13 +129,6 @@ public class EventRequestListAdapterItem extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        populateEvents(new EventRequestCallback() {
-            @Override
-            public void OnCallback(String event) {
-                Log.d("EventRequest","Event Desc: "+event);
-                viewHolder.eventDesc.setText(event);
-            }
-        },outdoorInviteFriendsModel.getEventId());
 
 
         viewHolder.acceptEvent.setClickable(true);
