@@ -1,11 +1,15 @@
 package utils;
 
-public class EventsFeedAdapterItem {
+import android.content.Context;
 
-    String events;
-
-    public EventsFeedAdapterItem(String events) {
+public class MyEventsAdapterItem {
+    public MyEventsAdapterItem(String events) {
         this.events = events;
+    }
+
+    public MyEventsAdapterItem()
+    {
+        //default
     }
 
     public String getEvents() {
@@ -16,6 +20,6 @@ public class EventsFeedAdapterItem {
         this.events = events;
     }
 
-
+    String events;
 
 }

@@ -277,12 +277,6 @@ private void populateEvents(final EventRequestCallback callback,String eventId){
 //-----------------------------------get event from id end------------------------------------------
 
 
-
-
-
-
-
-
     private static class ViewHolder{
         TextView eventDesc;
         ImageView acceptEvent;

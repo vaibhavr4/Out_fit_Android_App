@@ -1,5 +1,6 @@
 package com.vaibhav.out_fit;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -24,7 +25,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-import utils.NewsFeedAdapterItem;
+
+import utils.MyEventsAdapter;
+import utils.MyEventsAdapterItem;
 import utils.OutdoorEventModel;
 import utils.UserEventModel;
 import utils.UserSportsModel;
@@ -35,9 +38,8 @@ public class NewsFeedTabFragment extends Fragment {
     ListView newsListView;
     ListView eventsListView;
     ArrayList<String> newsItems = new ArrayList<>();
-    ArrayList<String> eventsItems = new ArrayList<>();
-    ArrayList<NewsFeedAdapterItem> newsFeed = new ArrayList<>();
-    ArrayList<NewsFeedAdapterItem> eventsFeed = new ArrayList<>();
+    ArrayList<MyEventsAdapterItem> eventsItems = new ArrayList<>();
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -71,63 +73,30 @@ public class NewsFeedTabFragment extends Fragment {
             populateEvents(new MyEventsFeedCallback() {
                 @Override
                 public void OnCallback(ArrayList<String> list) {
-                    ArrayAdapter eventsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list)
-                    {
-                        @Override
-                        public View getView(int position, View convertView, ViewGroup parent){
-                            // Get the Item from ListView
-                            View view = super.getView(position, convertView, parent);
-
-                            // Initialize a TextView for ListView each Item
-                            TextView tv = (TextView) view.findViewById(android.R.id.text1);
-
-                            // Set the text color of TextView (ListView Item)
-                            tv.setTextColor(Color.WHITE);
-
-                            // Generate ListView Item using TextView
-                            return view;
-                        }
-                    };
+                    MyEventsAdapter eventsAdapter =new MyEventsAdapter(getContext(),eventsItems);
                     eventsListView.setAdapter(eventsAdapter);
                 }
             });
         }
         else
         {
-            eventsItems.clear();
-            populateEvents(new MyEventsFeedCallback() {
-                @Override
-                public void OnCallback(ArrayList<String> list) {
-                    ArrayAdapter eventsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list)
-                    {
-                        @Override
-                        public View getView(int position, View convertView, ViewGroup parent){
-                            // Get the Item from ListView
-                            View view = super.getView(position, convertView, parent);
-
-                            // Initialize a TextView for ListView each Item
-                            TextView tv = (TextView) view.findViewById(android.R.id.text1);
-
-                            // Set the text color of TextView (ListView Item)
-                            tv.setTextColor(Color.WHITE);
-
-                            // Generate ListView Item using TextView
-                            return view;
-                        }
-                    };
+                    MyEventsAdapter eventsAdapter =new MyEventsAdapter(getContext(),eventsItems);
                     eventsListView.setAdapter(eventsAdapter);
-                }
-            });
         }
 
+        eventsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
 
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                MyEventsAdapterItem myEventsAdapterItem = (MyEventsAdapterItem) adapterView.getItemAtPosition(i);
+                Intent intent = new Intent(getActivity(),MyEventViewActivity.class);
+                intent.putExtra("EventId",myEventsAdapterItem.getEvents());
+                startActivity(intent);
+            }
+        });
 
 
         newsListView.setAdapter(newsAdapter);
-
-
-
 
     }
 
@@ -140,39 +109,29 @@ public class NewsFeedTabFragment extends Fragment {
         newsItems.add("After a fantastic World Cup, Jason Roy has now been picked for the one-off Test against Ireland");
         newsItems.add("Neil Lennon says Arsenal are yet to up their bid for Celtic defender Kieran Tierney.");
 
-//        eventsItems.add("Events: Play Cricket- Scheduled for 5PM today");
-//        eventsItems.add("Events: Play Basketball- Scheduled for 6PM today");
-//        eventsItems.add("Events: Play Cricket- Scheduled for 6PM Friday");
     }
 
     private void populateEvents(final MyEventsFeedCallback callback){
-        Log.d("UserEvents","HERE");
+        Log.d("NewsMyEvents","HERE");
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
         db = FirebaseFirestore.getInstance();
         final String currentUserId = currentFirebaseUser.getUid();
         final DocumentReference sportList = db.collection("user_events").document(currentUserId);
-        Log.d("UserEvents",sportList.toString());
+        Log.d("NewsMyEvents",sportList.toString());
         sportList.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
                     UserEventModel userEventModel = documentSnapshot.toObject(UserEventModel.class);
                     for (String event : userEventModel.getUserEvent()) {
-                        Log.d("UserEvents","Event:"+event.toString());
-                        final DocumentReference eventList = db.collection("events").document(event);
-                        eventList.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                if(documentSnapshot.exists()){
-                                    OutdoorEventModel outdoorEventModel = documentSnapshot.toObject(OutdoorEventModel.class);
-                                    Log.d("UserEvents","OutdoorEVentModel:"+outdoorEventModel.toString());
-                                    eventsItems.add(outdoorEventModel.getEventDescription().toString());
-                                }
-                                callback.OnCallback(eventsItems);
-                            }
-                        });
+                        Log.d("NewsMyEvents","Event:"+event.toString());
+                        MyEventsAdapterItem myEventsAdapterItem = new MyEventsAdapterItem();
+                        myEventsAdapterItem.setEvents(event);
+                        eventsItems.add(myEventsAdapterItem);
 
                     }
+                    Log.d("NewsMyEvents","Event:"+eventsItems.toString());
+                    callback.OnCallback(userEventModel.getUserEvent());
 
                 }
 
