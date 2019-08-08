@@ -1,5 +1,6 @@
 package com.vaibhav.out_fit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
@@ -19,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 import utils.EventRequestListAdapterItem;
+import utils.FriendsInviteBlockModel;
 import utils.FriendsRequestListAdapterItem;
 
 
@@ -58,8 +60,10 @@ public class FriendRequestsTabFragment extends Fragment {
         friendRequestsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
+                Intent intent = new Intent(getContext(), FriendRequestProfile.class);
+                FriendsInviteBlockModel friendsInviteBlockModel = (FriendsInviteBlockModel)adapterView.getItemAtPosition(i);
+                intent.putExtra("friend_id", friendsInviteBlockModel.getSenderId());
+                startActivity(intent);
             }
         });
 
