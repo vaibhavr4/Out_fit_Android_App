@@ -139,52 +139,49 @@ public class NewsFeedTabFragment extends Fragment {
         for (int i = 0; i < sportsArray.size(); i++) {
             switch (sportsArray.get(i)) {
                 case "Cricket":
-                    newsItems.add("After a fantastic World Cup, Jason Roy has now been picked for the one-off Test against Ireland");
-                    newsItems.add("Somerset fast-bowler Lewis Gregory has also been called up for the first time");
+                    newsItems.add("The Ashes (Aug 1 - Sept 16) ");
+                    newsItems.add("India Tour of West Indies (Aug 3 - Sept 8)");
                     break;
                 case "Soccer":
-                    newsItems.add("Neil Lennon says Arsenal are yet to up their bid for Celtic defender Kieran Tierney.");
-                    newsItems.add("Wayne Rooney is leaving his $2.7 million a year salary in the US to play soccer in England’s second tier");
+                    newsItems.add("Premier League - Liverpool V Norwich  (Aug 9)");
+                    newsItems.add("Premier League - West Ham V Man City  (Aug 10)");
+                    newsItems.add("Premier League - Newcastle V Arsenal  (Aug 11)");
                     break;
                 case "Baseball":
-                    newsItems.add("Dodgers walk it off for 10th time to sweep Cards");
-                    newsItems.add("Cubs feel they lucked out by signing Lucroy");
+                    newsItems.add("MLB - Yankees V Blue Jays (Aug 8)");
+                    newsItems.add("MLB - Angels V Red Sox (Aug 9)");
                     break;
                 case "Running":
-                    newsItems.add("At 43 years old, Bernard Lagat of the United States is making his marathon debut in New York.");
-                    newsItems.add("Vienna Named the Venue for Eliud Kipchoge’s Sub-2:00 Marathon Attempt");
+                    newsItems.add("Aspen Backcountry Marathon (Aug 10)");
+                    newsItems.add("Steamboat Stinger Trail Marathon (Aug 11)");
                     break;
                 case "Cycling":
-                    newsItems.add("Chris Froome: Egan Bernal's life is about to change forever\n" +
-                            "Four-time Tour de France winner says 2019 winner 'is going to go on to do amazing things in our sport'");
-                    newsItems.add("Tour de Pologne: Ackermann struggles in uphill sprint but keeps yellow\n" +
-                            "Majka finishes 6th on stage 5 and is 15th overall as mountains wait");
+                    newsItems.add("Vuelta a Espana (Aug 24 - Sept 15)");
+                    newsItems.add("Lexus Blackburn Bay Crits (Jan 1 - Jan 3)");
                     break;
                 case "Jogging":
-                    newsItems.add("Tom Hanks crashes wedding when he goes for a jog through Central Park");
-                    newsItems.add("GOING RUNNING CAN BOOST YOUR BRAINPOWER, SAY SCIENTISTS");
+                    newsItems.add("Storm Area 5.1K (Sept 20)");
+                    newsItems.add("Blacklight Run - Brockton (Aug 10)");
                     break;
                 case "Tennis":
-                    newsItems.add("Novak Djokovic says his epic Wimbledon final victory over Roger Federer was " +
-                            "his most \"mentally demanding\" match - and he even had to tell himself the partisan crowd was cheering for him.");
-                    newsItems.add("Rogers Cup: Rafael Nadal beats Dan Evans in Montreal");
-                    newsItems.add("DOWN A BREAK IN EACH SET, SERENA WILLIAMS ROARS BACK IN TORONTO RETURN");
+                    newsItems.add("US Open (Aug 26 - Sept 9)");
+                    newsItems.add("Rakuten Japan Open Tennis Championship (Sept 30 - Oct 7)");
                     break;
                 case "Badminton":
-                    newsItems.add("Badminton World Championships: PV Sindhu, Saina Nehwal To Face Hard Battles In Quarters");
-                    newsItems.add("Carolina Marin Pulls Out Of World Championships Due To Knee Injury");
+                    newsItems.add("IDBI Federal Life Insurance Hyderabad Open 2019 (Aug 6 - Aug 11)");
+                    newsItems.add("Bulgarian Open Championship 2019 (Aug 12 - Aug 15)");
                     break;
                 case "Basketball":
-                    newsItems.add("Donovan “Spida” Mitchell turning into USA Basketball’s Captain America");
-                    newsItems.add("Duke basketball ‘super team’ talks drive next two recruiting classes");
+                    newsItems.add("Women's Pan American Games (Aug 6 - Aug 10)");
+                    newsItems.add("FIBA World Cup for Men (Aug 31 - Sept 15)");
                     break;
                 case "Volleyball":
-                    newsItems.add("LUKES PACES SAN DIEGO IN 3-0 UPSET OF NO. 11 USC, ON TO FIRST SWEET 16 SINCE 2013");
-                    newsItems.add("STANFORD WINS 28TH IN A ROW WITH SECOND ROUND SWEEP OF LMU");
+                    newsItems.add("FIVB Volleyball Boys' U19 World Championship (Aug 21 - Aug 30)");
+                    newsItems.add("FIVB Volleyball Girls' U18 World Championship (Aug 5 - Sept 14)");
                     break;
                 case "Rugby":
-                    newsItems.add("South Africa rotate front row for Rugby Championship tie with Argentina");
-                    newsItems.add("Rugby World Cup: England wing Jack Nowell an injury doubt");
+                    newsItems.add("2019 World Rugby Pacific Nations Cup (27 July - 10 Aug)");
+                    newsItems.add("Rugby Africa Women’s Cup 2019 (aug 9 - Aug 17)");
                     break;
                 default:
                     break;
