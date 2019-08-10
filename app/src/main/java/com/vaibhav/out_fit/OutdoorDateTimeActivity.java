@@ -121,6 +121,7 @@ public class OutdoorDateTimeActivity extends AppCompatActivity {
                                 eText2.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                             }
                         }, year, month, day);
+                picker2.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
                 picker2.show();
             }
         });
