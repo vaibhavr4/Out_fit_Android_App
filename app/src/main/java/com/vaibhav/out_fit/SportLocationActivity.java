@@ -13,6 +13,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -184,10 +185,17 @@ public class SportLocationActivity extends FragmentActivity implements OnMapRead
 
                 String venueID = mMarkerMap.get(marker.getId());
                 String venueName = marker.getTitle();
-                Intent intent = new Intent(SportLocationActivity.this,OutdoorDateTimeActivity.class);
+                final Intent intent = new Intent(SportLocationActivity.this,OutdoorDateTimeActivity.class);
                 intent.putExtra("PLAYGROUND", venueName);
                 intent.putExtra("SPORT", sport);
-                startActivity(intent);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(intent);
+                    }
+                }, 1000);
+
                 return false;
             }
         });

@@ -61,7 +61,6 @@ public class FriendsInviteBlockAdapter extends BaseAdapter {
         textView.setText(friendsItems.get(i).getReceiverName());
         final View finalView = view;
         final Button invite = view.findViewById(R.id.invitationButton);
-        final Button block = view.findViewById(R.id.blockButton);
         invite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,23 +92,10 @@ public class FriendsInviteBlockAdapter extends BaseAdapter {
                 toast.show();
                 invite.setEnabled(false);
                 invite.setBackgroundColor(finalView.getResources().getColor(R.color.grey));
-                block.setEnabled(false);
+
             }
         });
-        block.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = finalView.getContext();
-                CharSequence text = "Blocked "+friendsItems.get(i).getReceiverName();
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 0);
-                toast.show();
-                block.setEnabled(false);
-                block.setBackgroundColor(finalView.getResources().getColor(R.color.grey));
-                invite.setEnabled(false);
-            }
-        });
+
 
         return view;
     }

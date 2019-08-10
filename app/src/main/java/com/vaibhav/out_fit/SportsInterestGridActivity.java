@@ -103,10 +103,18 @@ public class SportsInterestGridActivity extends AppCompatActivity {
                     adapter.selectedPositions.remove(selectedIndex);
                     ((SportsGridItemView) v).display(false);
                     selectedStrings.remove((String) parent.getItemAtPosition(position));
+                    if(selectedStrings.size()>0)
+                        btnGo.setEnabled(true);
+                    else
+                        btnGo.setEnabled(false);
                 } else {
                     adapter.selectedPositions.add(position);
                     ((SportsGridItemView) v).display(true);
                     selectedStrings.add((String) parent.getItemAtPosition(position));
+                    if(selectedStrings.size()>0)
+                        btnGo.setEnabled(true);
+                    else
+                        btnGo.setEnabled(false);
                 }
             }
         });

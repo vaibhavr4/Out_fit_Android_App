@@ -39,7 +39,7 @@ public class SportsGrid extends AppCompatActivity {
         btnGo = findViewById(R.id.button);
 
         selectedStrings = new ArrayList<>();
-
+        btnGo.setEnabled(false);
         final SportsGridViewAdapter adapter = new SportsGridViewAdapter(sports, this,new ArrayList());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -51,13 +51,23 @@ public class SportsGrid extends AppCompatActivity {
                     adapter.selectedPositions.remove(selectedIndex);
                     ((SportsGridItemView) v).display(false);
                     selectedStrings.remove((String) parent.getItemAtPosition(position));
+                    if(selectedStrings.size()>0)
+                        btnGo.setEnabled(true);
+                    else
+                        btnGo.setEnabled(false);
                 } else {
                     adapter.selectedPositions.add(position);
                     ((SportsGridItemView) v).display(true);
                     selectedStrings.add((String) parent.getItemAtPosition(position));
+                    if(selectedStrings.size()>0)
+                        btnGo.setEnabled(true);
+                    else
+                        btnGo.setEnabled(false);
                 }
+
             }
         });
+
 
         //set listener for Button event
         btnGo.setOnClickListener(new View.OnClickListener() {
